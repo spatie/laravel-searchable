@@ -14,25 +14,25 @@ class ModelSearchAspect extends SearchAspect
     protected $model;
 
     /** @var array */
-    protected $properties;
+    protected $attributes;
 
-    public function __construct(Model $model, array $properties = [])
+    public function __construct(string $model, array $attributes = [])
     {
         $this->model = $model;
-        $this->properties = $properties;
+        $this->attributes = $attributes;
     }
 
-    public static function forModel(Model $model, ...$properties): self
+    public static function forModel(Model $model, ...$attributes): self
     {
-        return new self($model, $properties);
+        return new self($model, $attributes);
     }
 
-    public function addSearchableProperty(string $property, bool $partial = true): self
+    public function addSearchableAttribute(string $attribute, bool $partial = true): self
     {
-        array_add(
-            $this->properties,
-            $property,
-            ['property' => $property, 'partial' => $partial]
+        $this->attributes = array_add(
+            $this->attributes,
+            $attribute,
+            ['attribute' => $attribute, 'partial' => $partial]
         );
 
         return $this;
@@ -69,14 +69,14 @@ class ModelSearchAspect extends SearchAspect
 
     protected function addSearchConditions(Builder $query, string $term)
     {
-        foreach ($this->properties as $property) {
-            $sql = "LOWER({$property['property']}) LIKE ?";
+        foreach ($this->attributes as $attribute) {
+            $sql = "LOWER({$attribute['attribute']}) LIKE ?";
 
             $term = mb_strtolower($term, 'UTF8');
 
-            $property['partial']
+            $attribute['partial']
                 ? $query->whereRaw($sql, ["%{$term}%"])
-                : $query->where($property['property'], $query);
+                : $query->where($attribute['attribute'], $query);
         }
     }
 }

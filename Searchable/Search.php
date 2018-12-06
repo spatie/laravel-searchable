@@ -15,6 +15,15 @@ class Search
         return $this;
     }
 
+    public function registerModel(string $modelClass, ...$attributes): ModelSearchAspect
+    {
+        $searchAspect = new ModelSearchAspect($modelClass, $attributes);
+
+        $this->registerAspect($searchAspect);
+
+        return $searchAspect;
+    }
+
     public function perform(string $query, User $user): SearchResultCollection
     {
         $searchResults = new SearchResultCollection();

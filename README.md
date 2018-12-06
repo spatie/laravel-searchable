@@ -18,10 +18,47 @@ composer require spatie/laravel-searchable
 
 ## Usage
 
-``` php
-$skeleton = new Spatie\Skeleton();
-echo $skeleton->echoPhrase('Hello, Spatie!');
+Start by registering your search aspects. A search aspect is anything that can be searched through. Typically, you'll have a search aspect for every searchable model. However, search aspects are not limited to models. You can easily add a search aspect for an external API, list of files or an array of values.
+
+### Searching model data
+
+If you only want to search your models, we've made things super easy. You can register a model as a search aspects using the `Search::registerModel()` in the `boot` method of any service provider:
+
+```php
+public function boot()
+{
+    Search::registerModel(User::class, ['name', 'email']);
+}
 ```
+
+By default the properties you provide to the `Search::registerModel()` method will be used to fuzzy search the model's actual database properties. To add a property that's not fuzzy searchable you can use the `addSearchableProperty` method and pass `false` as the second parameter:
+
+```php
+Search::registerModel(User::class)
+    ->addSearchableProperty('email', false) // only return results that exactly match the e-mail address
+    ->addSearchableProperty('username'); // return results for partial matches on usernames
+``` 
+
+### Creating custom search aspects
+
+You are not limited to only registering basic models as search aspects. You can easily create your own, custom search aspects by extending the `SearchAspect` class. After that you can register your custom search aspect using the `Search::registerSearchAspect()` method in any service provider.
+
+Consider the following custom search aspect to search an external API:
+
+```php
+
+class OrderSearchAspect extends SearchAspect
+{
+    public function getResults(string $term, User $user): Collection
+    {
+        return OrderApi::searchOrders($term);
+    }
+}
+```
+
+```php
+Search::registerSearchAspect(OrderSearchAspect::class);
+``` 
 
 ### Testing
 

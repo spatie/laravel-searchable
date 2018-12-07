@@ -4,7 +4,7 @@ namespace Spatie\Searchable\Tests;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Spatie\Searchable\BasicSearchResult;
+use ReflectionObject;
 use Spatie\Searchable\Exceptions\InvalidModelSearchAspectException;
 use Spatie\Searchable\Exceptions\InvalidSearchableModelException;
 use Spatie\Searchable\ModelSearchAspect;
@@ -24,6 +24,25 @@ class ModelSearchAspectTest extends TestCase
 
         $this->assertCount(1, $results);
         $this->assertInstanceOf(TestModel::class, $results[0]);
+    }
+
+    /** @test */
+    public function it_can_add_searchable_attributes()
+    {
+        $searchAspect = ModelSearchAspect::forModel(TestModel::class)
+            ->addSearchableAttribute('name', true)
+            ->addSearchableAttribute('email', false);
+
+        $refObject = new ReflectionObject($searchAspect);
+        $refProperty = $refObject->getProperty('attributes');
+        $refProperty->setAccessible(true);
+        $attributes = $refProperty->getValue($searchAspect);
+
+        $this->assertTrue($attributes[0]->isPartial());
+        $this->assertEquals('name', $attributes[0]->getAttribute());
+
+        $this->assertFalse($attributes[1]->isPartial());
+        $this->assertEquals('email', $attributes[1]->getAttribute());
     }
 
     /** @test */
@@ -55,7 +74,9 @@ class ModelSearchAspectTest extends TestCase
     /** @test */
     public function it_throws_an_exception_when_given_a_class_that_is_not_a_model()
     {
-        $notEvenAModel = new class {};
+        $notEvenAModel = new class
+        {
+        };
 
         $this->expectException(InvalidSearchableModelException::class);
 
@@ -65,7 +86,9 @@ class ModelSearchAspectTest extends TestCase
     /** @test */
     public function it_throws_an_exception_when_given_an_unsearchable_model()
     {
-        $modelWithoutSearchable = new class extends Model {};
+        $modelWithoutSearchable = new class extends Model
+        {
+        };
 
         $this->expectException(InvalidSearchableModelException::class);
 

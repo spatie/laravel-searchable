@@ -3,9 +3,8 @@
 namespace Spatie\Searchable\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Searchable\BasicSearchResult;
-use Spatie\Searchable\Contracts\Searchable;
-use Spatie\Searchable\Contracts\SearchResult;
+use Spatie\Searchable\SearchResult;
+use Spatie\Searchable\Searchable;
 
 class TestModel extends Model implements Searchable
 {
@@ -20,6 +19,6 @@ class TestModel extends Model implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-        return new BasicSearchResult($this->name);
+        return new SearchResult($this->name);
     }
 }

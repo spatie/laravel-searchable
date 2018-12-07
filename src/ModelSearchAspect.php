@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Collection;
-use Spatie\Searchable\Contracts\Searchable;
+use Spatie\Searchable\Searchable;
 use Spatie\Searchable\Exceptions\InvalidModelSearchAspectException;
 use Spatie\Searchable\Exceptions\InvalidSearchableModelException;
 

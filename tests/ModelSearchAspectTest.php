@@ -3,12 +3,47 @@
 namespace Spatie\Searchable\Tests;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Spatie\Searchable\BasicSearchResult;
+use Spatie\Searchable\Exceptions\InvalidModelSearchAspectException;
 use Spatie\Searchable\Exceptions\InvalidSearchableModelException;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Tests\Models\TestModel;
 
 class ModelSearchAspectTest extends TestCase
 {
+    /** @test */
+    public function it_can_perform_a_search()
+    {
+        TestModel::createWithName('john');
+        TestModel::createWithName('jane');
+
+        $searchAspect = ModelSearchAspect::forModel(TestModel::class, 'name');
+
+        $results = $searchAspect->getResults('john');
+
+        $this->assertCount(1, $results);
+        $this->assertInstanceOf(TestModel::class, $results[0]);
+    }
+
+    /** @test */
+    public function it_can_build_an_eloquent_query()
+    {
+        $searchAspect = ModelSearchAspect::forModel(TestModel::class)
+            ->addSearchableAttribute('name', true)
+            ->addSearchableAttribute('email', false);
+
+        DB::enableQueryLog();
+
+        $searchAspect->getResults('john');
+
+        $expectedQuery = 'select * from "test_models" where LOWER(name) LIKE ? or "email" = ?';
+
+        $executedQuery = array_get(DB::getQueryLog(), '0.query');
+
+        $this->assertEquals($expectedQuery, $executedQuery);
+    }
+
     /** @test */
     public function it_has_a_type()
     {
@@ -35,5 +70,15 @@ class ModelSearchAspectTest extends TestCase
         $this->expectException(InvalidSearchableModelException::class);
 
         ModelSearchAspect::forModel(get_class($modelWithoutSearchable));
+    }
+
+    /** @test */
+    public function it_throws_an_exception_if_there_are_no_searchable_attributes()
+    {
+        $searchAspect = ModelSearchAspect::forModel(TestModel::class);
+
+        $this->expectException(InvalidModelSearchAspectException::class);
+
+        $searchAspect->getResults('john');
     }
 }

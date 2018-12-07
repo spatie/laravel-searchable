@@ -20,6 +20,6 @@ class TestModel extends Model implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-        return new BasicSearchResult();
+        return new BasicSearchResult($this->name);
     }
 }

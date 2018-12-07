@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Collection;
 use Spatie\Searchable\Contracts\Searchable;
+use Spatie\Searchable\Exceptions\InvalidModelSearchAspectException;
 use Spatie\Searchable\Exceptions\InvalidSearchableModelException;
 
 class ModelSearchAspect extends SearchAspect
@@ -65,8 +66,12 @@ class ModelSearchAspect extends SearchAspect
         return $model->getTable();
     }
 
-    public function getResults(string $term, User $user): Collection
+    public function getResults(string $term, User $user = null): Collection
     {
+        if (empty($this->attributes)) {
+            throw InvalidModelSearchAspectException::noSearchableAttributes($this->model);
+        }
+
         $query = ($this->model)::query();
 
         $this->addSearchConditions($query, $term);
@@ -82,8 +87,8 @@ class ModelSearchAspect extends SearchAspect
             $term = mb_strtolower($term, 'UTF8');
 
             $attribute->isPartial()
-                ? $query->whereRaw($sql, ["%{$term}%"])
-                : $query->where($attribute->getAttribute(), $query);
+                ? $query->orWhereRaw($sql, ["%{$term}%"])
+                : $query->orWhere($attribute->getAttribute(), $term);
         }
     }
 }

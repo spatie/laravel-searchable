@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 abstract class SearchAspect
 {
-    abstract public function getResults(string $query, User $user): Collection;
+    abstract public function getResults(string $query, ?User $user = null): Collection;
 
     public function getType(): string
     {

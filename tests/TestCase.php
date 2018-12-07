@@ -20,7 +20,7 @@ class TestCase extends Orchestra
 
     protected function setUpDatabase(Application $app)
     {
-        $app['db']->connection('testing')->getSchemaBuilder()->create('test_models', function (Blueprint $table) {
+        $app['db']->connection()->getSchemaBuilder()->create('test_models', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->string('name');

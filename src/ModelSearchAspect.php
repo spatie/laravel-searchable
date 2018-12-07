@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Collection;
+use Spatie\Searchable\Contracts\Searchable;
 use Spatie\Searchable\Exceptions\InvalidSearchableModelException;
 
 class ModelSearchAspect extends SearchAspect
@@ -32,7 +33,7 @@ class ModelSearchAspect extends SearchAspect
         $this->attributes = SearchableAttribute::createMany($attributes);
     }
 
-    public static function forModel(Model $model, ...$attributes): self
+    public static function forModel(string $model, ...$attributes): self
     {
         return new self($model, $attributes);
     }

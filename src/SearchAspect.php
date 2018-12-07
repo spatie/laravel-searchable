@@ -7,15 +7,15 @@ use Illuminate\Support\Collection;
 
 abstract class SearchAspect
 {
-    abstract public function getResults(string $query, ?User $user = null): Collection;
+    abstract public function getResults(string $term, ?User $user = null): Collection;
 
     public function getType(): string
     {
         $className = class_basename(static::class);
 
-        $type = str_replace_last('SearchAspect', '', $className);
+        $type = str_before($className, 'SearchAspect');
 
-        $type = strtolower($type);
+        $type = snake_case(str_plural($type));
 
         return str_plural($type);
     }

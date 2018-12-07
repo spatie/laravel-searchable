@@ -8,8 +8,17 @@ class Search
 {
     protected $aspects = [];
 
-    public function registerAspect(SearchAspect $searchAspect): self
+    /**
+     * @param string|\Spatie\Searchable\SearchAspect $searchAspect
+     *
+     * @return \Spatie\Searchable\Search
+     */
+    public function registerAspect($searchAspect): self
     {
+        if (is_string($searchAspect)) {
+            $searchAspect = app($searchAspect);
+        }
+
         $this->aspects[$searchAspect->getType()] = $searchAspect;
 
         return $this;
@@ -24,15 +33,21 @@ class Search
         return $searchAspect;
     }
 
-    public function perform(string $query, User $user): SearchResultCollection
+    public function getSearchAspects(): array
+    {
+        return $this->aspects;
+    }
+
+    public function perform(string $query, ?User $user = null): SearchResultCollection
     {
         $searchResults = new SearchResultCollection();
 
-        collect($this->aspects)
-            ->map(function (string $aspectClassName) {
-                return app($aspectClassName);
-            })
+        collect($this->getSearchAspects())
             ->filter(function (SearchAspect $aspect) use ($user) {
+                if (! $user) {
+                    return true;
+                }
+
                 return $aspect->canBeUsedBy($user);
             })
             ->each(function (SearchAspect $aspect) use ($query, $user, $searchResults) {

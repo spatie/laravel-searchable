@@ -14,8 +14,6 @@ class TestCase extends Orchestra
         parent::setUp();
 
         $this->setUpDatabase($this->app);
-
-        $this->withFactories(__DIR__.'/factories');
     }
 
     protected function setUpDatabase(Application $app)

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Collection;
+use Spatie\Searchable\Exceptions\InvalidSearchableModelException;
 
 class ModelSearchAspect extends SearchAspect
 {
@@ -18,8 +19,17 @@ class ModelSearchAspect extends SearchAspect
 
     public function __construct(string $model, array $attributes = [])
     {
+        if (! is_subclass_of($model, Model::class)) {
+            throw InvalidSearchableModelException::notAModel($model);
+        }
+
+        if (! is_subclass_of($model, Searchable::class)) {
+            throw InvalidSearchableModelException::modelDoesNotImplementSearchable($model);
+        }
+
         $this->model = $model;
-        $this->attributes = $attributes;
+
+        $this->attributes = SearchableAttribute::createMany($attributes);
     }
 
     public static function forModel(Model $model, ...$attributes): self
@@ -29,11 +39,7 @@ class ModelSearchAspect extends SearchAspect
 
     public function addSearchableAttribute(string $attribute, bool $partial = true): self
     {
-        $this->attributes = array_add(
-            $this->attributes,
-            $attribute,
-            ['attribute' => $attribute, 'partial' => $partial]
-        );
+        $this->attributes[] = SearchableAttribute::create($attribute, $partial);
 
         return $this;
     }
@@ -44,7 +50,18 @@ class ModelSearchAspect extends SearchAspect
             return true;
         }
 
-        return $user->can($this->model, 'view');
+        return $user->can($this->model, 'view'); // TODO: this gate thing doesnt actually exist
+    }
+
+    public function getType(): string
+    {
+        $model = new $this->model();
+
+        if (property_exists($model, 'searchableType')) {
+            return $model->searchableType;
+        }
+
+        return $model->getTable();
     }
 
     public function getResults(string $term, User $user): Collection
@@ -56,27 +73,16 @@ class ModelSearchAspect extends SearchAspect
         return $query->get();
     }
 
-    public function getType(): string
-    {
-        $model = new ($this->model)();
-
-        if (property_exists($model, 'searchableType')) {
-            return $model->searchableType;
-        }
-
-        return $model->getTable();
-    }
-
     protected function addSearchConditions(Builder $query, string $term)
     {
         foreach ($this->attributes as $attribute) {
-            $sql = "LOWER({$attribute['attribute']}) LIKE ?";
+            $sql = "LOWER({$attribute->getAttribute()}) LIKE ?";
 
             $term = mb_strtolower($term, 'UTF8');
 
-            $attribute['partial']
+            $attribute->isPartial()
                 ? $query->whereRaw($sql, ["%{$term}%"])
-                : $query->where($attribute['attribute'], $query);
+                : $query->where($attribute->getAttribute(), $query);
         }
     }
 }

@@ -8,18 +8,24 @@ class SearchResultCollection extends Collection
 {
     public function addResults(string $type, Collection $models)
     {
-        $this->items[$type] = $models;
+        $models->each(function ($result) use ($type) {
+            $this->items[] = $result->getSearchResult()
+                ->setResult($result)
+                ->setType($type);
+        });
 
         return $this;
     }
 
-    public function count()
+    public function groupByType(): Collection
     {
-        return collect($this->items)->flatten()->count();
+        return $this->groupBy(function (SearchResult $searchResult) {
+            return $searchResult->type();
+        });
     }
 
     public function aspect(string $aspectName): Collection
     {
-        return collect($this->items[$aspectName] ?? []);
+        return $this->groupByType()->get($aspectName);
     }
 }

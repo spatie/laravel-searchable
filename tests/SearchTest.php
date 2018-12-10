@@ -23,7 +23,7 @@ class SearchTest extends TestCase
         $results = $search->perform('doe');
 
         $this->assertCount(1, $results);
-        $this->assertArrayHasKey('test_models', $results);
+        $this->assertArrayHasKey('test_models', $results->groupByType());
         $this->assertCount(1, $results->aspect('test_models'));
     }
 
@@ -37,7 +37,7 @@ class SearchTest extends TestCase
         $results = $search->perform('doe');
 
         $this->assertCount(2, $results);
-        $this->assertArrayHasKey('custom_names', $results);
+        $this->assertArrayHasKey('custom_names', $results->groupByType());
         $this->assertCount(2, $results->aspect('custom_names'));
     }
 
@@ -55,8 +55,8 @@ class SearchTest extends TestCase
         $results = $search->perform('doe');
 
         $this->assertCount(3, $results);
-        $this->assertArrayHasKey('custom_names', $results);
-        $this->assertArrayHasKey('test_models', $results);
+        $this->assertArrayHasKey('custom_names', $results->groupByType());
+        $this->assertArrayHasKey('test_models', $results->groupByType());
         $this->assertCount(2, $results->aspect('custom_names'));
         $this->assertCount(1, $results->aspect('test_models'));
     }

@@ -12,7 +12,7 @@ This package makes it easy to get structured search from a variety of sources. H
 $searchResults = (new Search())
    ->registerModel(User::class, 'name')
    ->registerModel(BlogPost::class, 'title')
-   ->search('john');
+   ->perform('john');
 ```
 
 The search will be performed case insensitive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute and `BlogPost`s that contain 'john' in the `title` attribute.
@@ -89,7 +89,7 @@ With the models prepared you can search them like this:
 ```php
 $searchResults = (new Search())
    ->registerModel(User::class, 'name')
-   ->search('john');
+   ->perform('john');
 ```
 
 The search will be performed case insensitive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute.
@@ -101,13 +101,13 @@ You can also pass multiple attributes to search through:
 
 $searchResults = (new Search())
    ->registerModel(User::class, 'first_name', 'last_name')
-   ->search('john');
+   ->perform('john');
    
 // or use an array of model attributes
 
 $searchResults = (new Search())
    ->registerModel(User::class, ['first_name', 'last_name'])
-   ->search('john');
+   ->perform('john');
 ```
 
 To get fine grained control you can also use a callable. This way you can also search for exact matches.
@@ -142,7 +142,7 @@ This is how you can use it:
 ```php
 $searchResults = (new Search())
    ->registerAspect(OrderSearchAspect::class)
-   ->search('john')
+   ->perform('john')
 ```
 
 ### Rendering search results

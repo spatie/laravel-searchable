@@ -19,8 +19,6 @@ class ModelSearchAspect extends SearchAspect
     protected $attributes = [];
 
     /**
-     * ModelSearchAspect constructor.
-     *
      * @param string $model
      * @param array|\Closure $attributes
      *

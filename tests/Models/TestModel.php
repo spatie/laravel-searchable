@@ -2,9 +2,9 @@
 
 namespace Spatie\Searchable\Tests\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Spatie\Searchable\SearchResult;
 use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
+use Illuminate\Database\Eloquent\Model;
 
 class TestModel extends Model implements Searchable
 {

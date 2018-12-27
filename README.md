@@ -1,7 +1,5 @@
 # 𝕷𝖆𝖗𝖆𝖛𝖊𝖑 𝕾𝖊𝖆𝖗𝖈𝖍𝖆𝖇𝖑𝖊
 
-## (Laravel Searchable)
-
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-searchable.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-searchable)
 [![Build Status](https://img.shields.io/travis/spatie/laravel-searchable/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-searchable)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-searchable.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-searchable)

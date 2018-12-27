@@ -10,12 +10,9 @@ class SearchResultTest extends TestCase
     /** @test */
     public function it_can_store_a_search_result()
     {
-        $searchable = new class implements Searchable
-        {
-
+        $searchable = new class implements Searchable {
             public function getSearchResult(): SearchResult
             {
-
             }
         };
 

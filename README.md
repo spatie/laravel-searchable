@@ -95,10 +95,35 @@ $searchResults = (new Search();
    ->search('john');
 ```
 
-The search will be performed case insenstive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute and `BlogPost`s that contain 'john' in the `title` attribute.
+The search will be performed case insenstive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute.
 
+You can also pass multiple attributes
+
+```php
+// use multiple arguments
+
+$searchResults = (new Search();
+   ->registerModel(User::class, 'first_name', 'last_name');
+   ->search('john');
+   
+// or use an array
+
+$searchResults = (new Search();
+   ->registerModel(User::class, ['first_name', 'last_name']);
+   ->search('john');
+```
+
+To get fine grained control you can also use a callable()
+
+```php
+Search::registerModel(User::class)
+    ->addSearchableProperty('name'); // return results for partial matches on usernames
+    ->addExactSearchableProperty('email') // only return results that exactly match the e-mail address
+```
 
 By default the properties you provide to the `Search::registerModel()` method will be used to fuzzy search the model's actual database properties. To add a property that's not fuzzy searchable you can use the `addSearchableProperty` method and pass `false` as the second parameter:
+
+Instead of passing
 
 ```php
 Search::registerModel(User::class)

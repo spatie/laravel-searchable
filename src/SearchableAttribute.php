@@ -13,12 +13,18 @@ class SearchableAttribute
     public function __construct(string $attribute, bool $partial = true)
     {
         $this->attribute = $attribute;
+
         $this->partial = $partial;
     }
 
     public static function create(string $attribute, bool $partial = true): self
     {
         return new self($attribute, $partial);
+    }
+
+    public static function createExact(string $attribute): self
+    {
+        return static::create($attribute, false);
     }
 
     public static function createMany(array $attributes): array

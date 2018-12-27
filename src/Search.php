@@ -26,6 +26,10 @@ class Search
 
     public function registerModel(string $modelClass, ...$attributes): self
     {
+        if (isset($attributes[0]) && is_callable($attributes[0])) {
+            $attributes = $attributes[0];
+        }
+
         $searchAspect = new ModelSearchAspect($modelClass, $attributes);
 
         $this->registerAspect($searchAspect);

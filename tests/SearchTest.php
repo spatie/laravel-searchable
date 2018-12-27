@@ -28,6 +28,25 @@ class SearchTest extends TestCase
     }
 
     /** @test */
+    public function a_model_search_aspect_can_be_configured_using_a_closure()
+    {
+        TestModel::createWithName('john doe');
+        TestModel::createWithName('alex');
+
+        $search = new Search();
+
+        $search->registerModel(TestModel::class, function(ModelSearchAspect $modelSearchAspect) {
+            return $modelSearchAspect->addSearchableAttribute('name');
+        });
+
+        $results = $search->perform('doe');
+
+        $this->assertCount(1, $results);
+        $this->assertArrayHasKey('test_models', $results->groupByType());
+        $this->assertCount(1, $results->aspect('test_models'));
+    }
+
+    /** @test */
     public function it_can_search_a_custom_search_aspect()
     {
         $search = new Search();

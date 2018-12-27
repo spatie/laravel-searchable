@@ -16,21 +16,37 @@ class ModelSearchAspect extends SearchAspect
     protected $model;
 
     /** @var array */
-    protected $attributes;
+    protected $attributes = [];
 
-    public function __construct(string $model, array $attributes = [])
+    /**
+     * ModelSearchAspect constructor.
+     *
+     * @param string $model
+     * @param array|\Closure $attributes
+     *
+     * @throws \Spatie\Searchable\Exceptions\InvalidSearchableModel
+     */
+    public function __construct(string $model, $attributes = [])
     {
-        if (! is_subclass_of($model, Model::class)) {
+        if (!is_subclass_of($model, Model::class)) {
             throw InvalidSearchableModel::notAModel($model);
         }
 
-        if (! is_subclass_of($model, Searchable::class)) {
+        if (!is_subclass_of($model, Searchable::class)) {
             throw InvalidSearchableModel::modelDoesNotImplementSearchable($model);
         }
 
         $this->model = $model;
 
-        $this->attributes = SearchableAttribute::createMany($attributes);
+        if (is_array($attributes)) {
+            $this->attributes = SearchableAttribute::createMany($attributes);
+        }
+
+        if (is_callable($attributes)) {
+            $callable = $attributes;
+
+            $callable($this);
+        }
     }
 
     public static function forModel(string $model, ...$attributes): self
@@ -45,9 +61,16 @@ class ModelSearchAspect extends SearchAspect
         return $this;
     }
 
+    public function addExactSearchableAttribute(string $attribute): self
+    {
+        $this->attributes[] = SearchableAttribute::createExact($attribute);
+
+        return $this;
+    }
+
     public function canBeUsedBy(User $user): bool
     {
-        if (! app(Gate::class)->has($this->model)) {
+        if (!app(Gate::class)->has($this->model)) {
             return true;
         }
 

@@ -50,7 +50,7 @@ class ModelSearchAspectTest extends TestCase
     {
         $searchAspect = ModelSearchAspect::forModel(TestModel::class)
             ->addSearchableAttribute('name', true)
-            ->addSearchableAttribute('email', false);
+            ->addExactSearchableAttribute('email');
 
         DB::enableQueryLog();
 

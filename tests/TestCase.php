@@ -25,9 +25,4 @@ class TestCase extends Orchestra
             $table->string('name');
         });
     }
-
-    protected function getPackageProviders($app)
-    {
-        return [SearchServiceProvider::class];
-    }
 }

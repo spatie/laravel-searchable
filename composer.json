@@ -47,15 +47,5 @@
     },
     "config": {
         "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Spatie\\Searchable\\SearchServiceProvider"
-            ],
-            "aliases": {
-                "Searchable": "Spatie\\Searchable\\SearchFacade"
-            }
-        }
     }
 }

@@ -9,7 +9,7 @@
 This package makes it easy to get structured search from a variety of sources. Here's an example where we search through some models. We already did some small preparation on the models themselves.
 
 ```php
-$searchResults = (new Search();
+$searchResults = (new Search())
    ->registerModel(User::class, 'name');
    ->registerModel(BlogPost::class, 'title')
    ->search('john');

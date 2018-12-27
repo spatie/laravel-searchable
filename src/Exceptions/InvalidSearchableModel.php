@@ -4,7 +4,7 @@ namespace Spatie\Searchable\Exceptions;
 
 use Exception;
 
-class InvalidSearchableModelException extends Exception
+class InvalidSearchableModel extends Exception
 {
     public static function notAModel(string $model): self
     {

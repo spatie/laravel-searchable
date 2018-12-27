@@ -6,8 +6,7 @@
 [![StyleCI](https://github.styleci.io/repos/160661570/shield?branch=master)](https://github.styleci.io/repos/160661570)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-searchable.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-searchable)
 
-
-This is where your description should go. Try and limit it to a paragraph or two.
+This package makes it easy to 
 
 ## Installation
 
@@ -26,6 +25,9 @@ Start by registering your search aspects. A search aspect is anything that can b
 If you only want to search your models, we've made things super easy. You can register a model as a search aspects using the `Search::registerModel()` in the `boot` method of any service provider:
 
 ```php
+use Spatie\Searchable\Search;
+use App\User;
+
 public function boot()
 {
     Search::registerModel(User::class, ['name', 'email']);

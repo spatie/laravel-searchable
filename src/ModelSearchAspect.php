@@ -7,8 +7,8 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Auth\Access\Gate;
-use Spatie\Searchable\Exceptions\InvalidSearchableModelException;
-use Spatie\Searchable\Exceptions\InvalidModelSearchAspectException;
+use Spatie\Searchable\Exceptions\InvalidSearchableModel;
+use Spatie\Searchable\Exceptions\InvalidModelSearchAspect;
 
 class ModelSearchAspect extends SearchAspect
 {
@@ -21,11 +21,11 @@ class ModelSearchAspect extends SearchAspect
     public function __construct(string $model, array $attributes = [])
     {
         if (! is_subclass_of($model, Model::class)) {
-            throw InvalidSearchableModelException::notAModel($model);
+            throw InvalidSearchableModel::notAModel($model);
         }
 
         if (! is_subclass_of($model, Searchable::class)) {
-            throw InvalidSearchableModelException::modelDoesNotImplementSearchable($model);
+            throw InvalidSearchableModel::modelDoesNotImplementSearchable($model);
         }
 
         $this->model = $model;
@@ -68,7 +68,7 @@ class ModelSearchAspect extends SearchAspect
     public function getResults(string $term, User $user = null): Collection
     {
         if (empty($this->attributes)) {
-            throw InvalidModelSearchAspectException::noSearchableAttributes($this->model);
+            throw InvalidModelSearchAspect::noSearchableAttributes($this->model);
         }
 
         $query = ($this->model)::query();

@@ -4,7 +4,7 @@ namespace Spatie\Searchable\Exceptions;
 
 use Exception;
 
-class InvalidModelSearchAspectException extends Exception
+class InvalidModelSearchAspect extends Exception
 {
     public static function noSearchableAttributes(string $model): self
     {

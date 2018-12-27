@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Tests\Models\TestModel;
-use Spatie\Searchable\Exceptions\InvalidSearchableModelException;
-use Spatie\Searchable\Exceptions\InvalidModelSearchAspectException;
+use Spatie\Searchable\Exceptions\InvalidSearchableModel;
+use Spatie\Searchable\Exceptions\InvalidModelSearchAspect;
 
 class ModelSearchAspectTest extends TestCase
 {
@@ -77,7 +77,7 @@ class ModelSearchAspectTest extends TestCase
         $notEvenAModel = new class {
         };
 
-        $this->expectException(InvalidSearchableModelException::class);
+        $this->expectException(InvalidSearchableModel::class);
 
         ModelSearchAspect::forModel(get_class($notEvenAModel));
     }
@@ -88,7 +88,7 @@ class ModelSearchAspectTest extends TestCase
         $modelWithoutSearchable = new class extends Model {
         };
 
-        $this->expectException(InvalidSearchableModelException::class);
+        $this->expectException(InvalidSearchableModel::class);
 
         ModelSearchAspect::forModel(get_class($modelWithoutSearchable));
     }
@@ -98,7 +98,7 @@ class ModelSearchAspectTest extends TestCase
     {
         $searchAspect = ModelSearchAspect::forModel(TestModel::class);
 
-        $this->expectException(InvalidModelSearchAspectException::class);
+        $this->expectException(InvalidModelSearchAspect::class);
 
         $searchAspect->getResults('john');
     }

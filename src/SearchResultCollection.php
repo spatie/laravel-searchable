@@ -10,7 +10,6 @@ class SearchResultCollection extends Collection
     {
         $results->each(function ($result) use ($type) {
             $this->items[] = $result->getSearchResult()
-                ->setResult($result)
                 ->setType($type);
         });
 

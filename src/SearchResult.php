@@ -4,6 +4,9 @@ namespace Spatie\Searchable;
 
 class SearchResult
 {
+    /** @var \Spatie\Searchable\Searchable */
+    public $searchable;
+
     /** @var string */
     public $title;
 
@@ -13,11 +16,10 @@ class SearchResult
     /** @var string */
     public $type;
 
-    /** @var \Spatie\Searchable\Searchable */
-    public $result;
-
-    public function __construct(Searchstring $title, ?string $url = null)
+    public function __construct(Searchable $searchable, string $title, ?string $url = null)
     {
+        $this->searchable = $searchable;
+
         $this->title = $title;
 
         $this->url = $url;
@@ -26,13 +28,6 @@ class SearchResult
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function setResult(Searchable $result): self
-    {
-        $this->result = $result;
 
         return $this;
     }

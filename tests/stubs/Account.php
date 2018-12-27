@@ -17,6 +17,6 @@ class Account implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-        return new SearchResult($this->name);
+        return new SearchResult($this, $this->name);
     }
 }

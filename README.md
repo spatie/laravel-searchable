@@ -24,8 +24,8 @@ In your view you can now loop over the search results:
 
 There are {{ $searchResults->count() }} results.
 
-@foreach($searchResults->groupByType() as $modelName => $modelSearchResults)
-   <h2>{{ $modelName }}</h2>
+@foreach($searchResults->groupByType() as $type => $modelSearchResults)
+   <h2>{{ $type }}</h2>
    
    @foreach($modelSearchResults as $searchResult)
        <ul>
@@ -147,6 +147,30 @@ $searchResults = (new Search())
    ->registerAspect(OrderSearchAspect::class)
    ->search('john')
 ```
+
+### Rendering search results
+
+Here's an example of how you can render search results:
+
+```html
+<h1>Search</h1>
+
+There are {{ $searchResults->count() }} results.
+
+@foreach($searchResults->groupByType() as $type => $modelSearchResults)
+   <h2>{{ $type }}</h2>
+   
+   @foreach($modelSearchResults as $searchResult)
+       <ul>
+            <a href="{{ $searchResult->url }}">{{ $searchResult->name }}</a>
+       </ul>
+   @endforeach
+@endforeach
+```
+
+You can customize the `$type` by 
+
+
 
 ### Testing
 

@@ -11,6 +11,10 @@ abstract class SearchAspect
 
     public function getType(): string
     {
+        if (isset(static::$searchType)) {
+            return static::$searchType;
+        }
+
         $className = class_basename(static::class);
 
         $type = str_before($className, 'SearchAspect');

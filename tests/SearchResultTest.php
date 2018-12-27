@@ -11,7 +11,7 @@ class SearchResultTest extends TestCase
     {
         $result = new SearchResult('Result', url('/'));
 
-        $this->assertEquals($result->title(), 'Result');
-        $this->assertEquals($result->url(), url('/'));
+        $this->assertEquals($result->title, 'Result');
+        $this->assertEquals($result->url, url('/'));
     }
 }

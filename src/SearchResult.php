@@ -4,21 +4,22 @@ namespace Spatie\Searchable;
 
 class SearchResult
 {
-    /** @var \Spatie\Searchable\Searchable */
-    protected $result;
-
     /** @var string */
-    protected $type;
-
-    /** @var string */
-    protected $title;
+    public $title;
 
     /** @var null|string */
-    protected $url;
+    public $url;
+
+    /** @var string */
+    public $type;
+
+    /** @var \Spatie\Searchable\Searchable */
+    public $result;
 
     public function __construct(string $title, ?string $url = null)
     {
         $this->title = $title;
+
         $this->url = $url;
     }
 
@@ -34,25 +35,5 @@ class SearchResult
         $this->result = $result;
 
         return $this;
-    }
-
-    public function result(): Searchable
-    {
-        return $this->result;
-    }
-
-    public function type(): string
-    {
-        return $this->type;
-    }
-
-    public function title(): string
-    {
-        return $this->title;
-    }
-
-    public function url(): ?string
-    {
-        return $this->url;
     }
 }

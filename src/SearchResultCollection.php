@@ -20,7 +20,7 @@ class SearchResultCollection extends Collection
     public function groupByType(): Collection
     {
         return $this->groupBy(function (SearchResult $searchResult) {
-            return $searchResult->type();
+            return $searchResult->type;
         });
     }
 

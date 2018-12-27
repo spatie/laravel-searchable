@@ -24,13 +24,13 @@ class Search
         return $this;
     }
 
-    public function registerModel(string $modelClass, ...$attributes): ModelSearchAspect
+    public function registerModel(string $modelClass, ...$attributes): self
     {
         $searchAspect = new ModelSearchAspect($modelClass, $attributes);
 
         $this->registerAspect($searchAspect);
 
-        return $searchAspect;
+        return $this;
     }
 
     public function getSearchAspects(): array

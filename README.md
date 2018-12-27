@@ -6,7 +6,34 @@
 [![StyleCI](https://github.styleci.io/repos/160661570/shield?branch=master)](https://github.styleci.io/repos/160661570)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-searchable.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-searchable)
 
-This package makes it easy to 
+This package makes it easy to get structured search from a variety of sources. Here's an example where we search through some models. We already did some small preparation on the models themselves.
+
+```php
+$allSearchResults = (new Search();
+   ->registerModel(User::class, 'name');
+   ->registerModel(BlogPost::class, 'title')
+   ->search('john');
+```
+
+The search will be performed case insenstive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute and `BlogPost`s that contain 'john' in the `title` attribute.
+
+In your view you can now loop over the search results:
+
+```html
+<h1>Search</h1>
+@foreach($allSearchResults as $modelName => $modelSearchResults)
+   <h2>{{ $modelName }}</h2>
+   
+   @foreach($modelSearchResults as $searchResult)
+       <ul>
+            <a href="{{ $searchResult->url }}">{{ $searchResult->name }}</a>
+       </ul>
+   @endforeach
+@endforeach
+```
+
+In this example we used models, but you can easily add a search aspect for an external API, list of files or an array of values.
+
 
 ## Installation
 
@@ -17,8 +44,6 @@ composer require spatie/laravel-searchable
 ```
 
 ## Usage
-
-Start by registering your search aspects. A search aspect is anything that can be searched through. Typically, you'll have a search aspect for every searchable model. However, search aspects are not limited to models. You can easily add a search aspect for an external API, list of files or an array of values.
 
 ### Searching model data
 

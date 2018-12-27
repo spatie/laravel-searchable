@@ -9,7 +9,7 @@
 This package makes it easy to get structured search from a variety of sources. Here's an example where we search through some models. We already did some small preparation on the models themselves.
 
 ```php
-$searchResults = (new Search();
+$searchResults = (new Search())
    ->registerModel(User::class, 'name');
    ->registerModel(BlogPost::class, 'title')
    ->search('john');
@@ -73,7 +73,7 @@ class BlogPost extends Model implements Searchable
 {
      public function getSearchResult(): SearchResult
      {
-        $url = route('blogPost.show, $this->slug);
+        $url = route('blogPost.show', $this->slug);
      
          return new \Spatie\Searchable\SearchResult(
             $this,
@@ -90,7 +90,7 @@ class BlogPost extends Model implements Searchable
 With the models prepared you can search them like this:
 
 ```php
-$searchResults = (new Search();
+$searchResults = (new Search())
    ->registerModel(User::class, 'name');
    ->search('john');
 ```

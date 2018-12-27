@@ -73,7 +73,7 @@ class BlogPost extends Model implements Searchable
 {
      public function getSearchResult(): SearchResult
      {
-        $url = route('blogPost.show, $this->slug);
+        $url = route('blogPost.show', $this->slug);
      
          return new \Spatie\Searchable\SearchResult(
             $this,

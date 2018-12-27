@@ -1,6 +1,6 @@
 {
     "name": "spatie/laravel-searchable",
-    "description": "An easy way to search multiple models",
+    "description": "Pragmatically search through models and other sources",
     "keywords": [
         "spatie",
         "laravel-searchable"

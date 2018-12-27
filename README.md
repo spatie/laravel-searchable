@@ -48,7 +48,9 @@ composer require spatie/laravel-searchable
 
 ## Usage
 
-### Searching model data
+### Searching models
+
+### Preparing your models
 
 In order to search through models you'll have to let them implement the `Searchable` interface.
 
@@ -61,21 +63,40 @@ interface Searchable
 }
 ```
 
-You'll only need to add a `getSearchResult` function that must return an instance of `SearchResult`. That `SearchResult` 
-
-
-
-You can register a model as a search aspects using the `Search::registerModel()` in the `boot` method of any service provider:
+You'll only need to add a `getSearchResult` function that must return an instance of `SearchResult`. Here's how it could look like for a a blog post model.
 
 ```php
-use Spatie\Searchable\Search;
-use App\User;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-public function boot()
+class BlogPost extends Model implements Searchable
 {
-    Search::registerModel(User::class, ['name', 'email']);
+     public function getSearchResult(): SearchResult
+     {
+        $url = route('blogPost.show, $this->slug);
+     
+         return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->title,
+            $url,
+         );
+     }
 }
 ```
+
+
+### Searching models
+
+With the models prepared you can search them like this:
+
+```php
+$searchResults = (new Search();
+   ->registerModel(User::class, 'name');
+   ->search('john');
+```
+
+The search will be performed case insenstive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute and `BlogPost`s that contain 'john' in the `title` attribute.
+
 
 By default the properties you provide to the `Search::registerModel()` method will be used to fuzzy search the model's actual database properties. To add a property that's not fuzzy searchable you can use the `addSearchableProperty` method and pass `false` as the second parameter:
 

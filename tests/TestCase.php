@@ -3,9 +3,8 @@
 namespace Spatie\Searchable\Tests;
 
 use Illuminate\Foundation\Application;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Spatie\Searchable\SearchServiceProvider;
+use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra

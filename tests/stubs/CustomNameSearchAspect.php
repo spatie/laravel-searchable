@@ -4,7 +4,6 @@ namespace Spatie\Searchable\Tests\stubs;
 
 use Illuminate\Support\Collection;
 use Spatie\Searchable\SearchAspect;
-use Illuminate\Foundation\Auth\User;
 
 class CustomNameSearchAspect extends SearchAspect
 {

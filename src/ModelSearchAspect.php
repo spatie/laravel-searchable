@@ -6,7 +6,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Contracts\Auth\Access\Gate;
 use Spatie\Searchable\Exceptions\InvalidSearchableModel;
 use Spatie\Searchable\Exceptions\InvalidModelSearchAspect;
 
@@ -31,11 +30,11 @@ class ModelSearchAspect extends SearchAspect
      */
     public function __construct(string $model, $attributes = [])
     {
-        if (!is_subclass_of($model, Model::class)) {
+        if (! is_subclass_of($model, Model::class)) {
             throw InvalidSearchableModel::notAModel($model);
         }
 
-        if (!is_subclass_of($model, Searchable::class)) {
+        if (! is_subclass_of($model, Searchable::class)) {
             throw InvalidSearchableModel::modelDoesNotImplementSearchable($model);
         }
 
@@ -51,7 +50,6 @@ class ModelSearchAspect extends SearchAspect
             $callable($this);
         }
     }
-
 
     public function addSearchableAttribute(string $attribute, bool $partial = true): self
     {

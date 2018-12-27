@@ -113,23 +113,13 @@ $searchResults = (new Search();
    ->search('john');
 ```
 
-To get fine grained control you can also use a callable()
+To get fine grained control you can also use a callable. This way you can also search for exact matches.
 
 ```php
 Search::registerModel(User::class)
     ->addSearchableProperty('name'); // return results for partial matches on usernames
     ->addExactSearchableProperty('email') // only return results that exactly match the e-mail address
 ```
-
-By default the properties you provide to the `Search::registerModel()` method will be used to fuzzy search the model's actual database properties. To add a property that's not fuzzy searchable you can use the `addSearchableProperty` method and pass `false` as the second parameter:
-
-Instead of passing
-
-```php
-Search::registerModel(User::class)
-    ->addSearchableProperty('email', false) // only return results that exactly match the e-mail address
-    ->addSearchableProperty('username'); // return results for partial matches on usernames
-``` 
 
 ### Creating custom search aspects
 

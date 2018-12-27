@@ -97,7 +97,7 @@ $searchResults = (new Search();
 
 The search will be performed case insenstive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute.
 
-You can also pass multiple attributes
+You can also pass multiple attributes.
 
 ```php
 // use multiple arguments

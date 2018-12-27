@@ -9,8 +9,7 @@ class SearchResultCollection extends Collection
     public function addResults(string $type, Collection $results)
     {
         $results->each(function ($result) use ($type) {
-            $this->items[] = $result->getSearchResult()
-                ->setType($type);
+            $this->items[] = $result->getSearchResult()->setType($type);
         });
 
         return $this;

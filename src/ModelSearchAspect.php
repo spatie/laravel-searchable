@@ -18,6 +18,11 @@ class ModelSearchAspect extends SearchAspect
     /** @var array */
     protected $attributes = [];
 
+    public static function forModel(string $model, ...$attributes): self
+    {
+        return new self($model, $attributes);
+    }
+
     /**
      * @param string $model
      * @param array|\Closure $attributes
@@ -47,10 +52,6 @@ class ModelSearchAspect extends SearchAspect
         }
     }
 
-    public static function forModel(string $model, ...$attributes): self
-    {
-        return new self($model, $attributes);
-    }
 
     public function addSearchableAttribute(string $attribute, bool $partial = true): self
     {

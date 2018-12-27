@@ -179,7 +179,7 @@ class BlogPost extends Model implements Searchable
 
 ### Testing
 
-``` bash
+```bash
 composer test
 ```
 

@@ -3,6 +3,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-searchable.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-searchable)
 [![Build Status](https://img.shields.io/travis/spatie/laravel-searchable/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-searchable)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-searchable.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-searchable)
+[![StyleCI](https://github.styleci.io/repos/160661570/shield?branch=master)](https://github.styleci.io/repos/160661570)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-searchable.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-searchable)
 
 

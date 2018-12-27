@@ -6,9 +6,9 @@ use Illuminate\Support\Collection;
 
 class SearchResultCollection extends Collection
 {
-    public function addResults(string $type, Collection $models)
+    public function addResults(string $type, Collection $results)
     {
-        $models->each(function ($result) use ($type) {
+        $results->each(function ($result) use ($type) {
             $this->items[] = $result->getSearchResult()
                 ->setResult($result)
                 ->setType($type);

@@ -9,7 +9,7 @@
 This package makes it easy to get structured search from a variety of sources. Here's an example where we search through some models. We already did some small preparation on the models themselves.
 
 ```php
-$allSearchResults = (new Search();
+$searchResults = (new Search();
    ->registerModel(User::class, 'name');
    ->registerModel(BlogPost::class, 'title')
    ->search('john');
@@ -21,7 +21,10 @@ In your view you can now loop over the search results:
 
 ```html
 <h1>Search</h1>
-@foreach($allSearchResults as $modelName => $modelSearchResults)
+
+There are {{ $searchResults->count() }} results.
+
+@foreach($searchResults->groupByType() as $modelName => $modelSearchResults)
    <h2>{{ $modelName }}</h2>
    
    @foreach($modelSearchResults as $searchResult)
@@ -47,7 +50,22 @@ composer require spatie/laravel-searchable
 
 ### Searching model data
 
-If you only want to search your models, we've made things super easy. You can register a model as a search aspects using the `Search::registerModel()` in the `boot` method of any service provider:
+In order to search through models you'll have to let them implement the `Searchable` interface.
+
+```php
+namespace Spatie\Searchable;
+
+interface Searchable
+{
+    public function getSearchResult(): SearchResult;
+}
+```
+
+You'll only need to add a `getSearchResult` function that must return an instance of `SearchResult`. That `SearchResult` 
+
+
+
+You can register a model as a search aspects using the `Search::registerModel()` in the `boot` method of any service provider:
 
 ```php
 use Spatie\Searchable\Search;

@@ -16,7 +16,7 @@ class SearchResult
     /** @var \Spatie\Searchable\Searchable */
     public $result;
 
-    public function __construct(string $title, ?string $url = null)
+    public function __construct(Searchstring $title, ?string $url = null)
     {
         $this->title = $title;
 

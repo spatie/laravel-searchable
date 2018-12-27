@@ -14,14 +14,4 @@ class SearchAspectTest extends TestCase
 
         $this->assertEquals('custom_names', $searchAspect->getType());
     }
-
-    /** @test */
-    public function it_can_be_used_by_everyone_by_default()
-    {
-        $searchAspect = new CustomNameSearchAspect();
-
-        $user = new User();
-
-        $this->assertTrue($searchAspect->canBeUsedBy($user));
-    }
 }

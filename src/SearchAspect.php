@@ -19,9 +19,4 @@ abstract class SearchAspect
 
         return str_plural($type);
     }
-
-    public function canBeUsedBy(User $user): bool
-    {
-        return true;
-    }
 }

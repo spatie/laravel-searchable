@@ -67,15 +67,6 @@ class ModelSearchAspect extends SearchAspect
         return $this;
     }
 
-    public function canBeUsedBy(User $user): bool
-    {
-        if (!app(Gate::class)->has($this->model)) {
-            return true;
-        }
-
-        return $user->can($this->model, 'view');
-    }
-
     public function getType(): string
     {
         $model = new $this->model();

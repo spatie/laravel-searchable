@@ -47,13 +47,6 @@ class Search
         $searchResults = new SearchResultCollection();
 
         collect($this->getSearchAspects())
-            ->filter(function (SearchAspect $aspect) use ($user) {
-                if (! $user) {
-                    return true;
-                }
-
-                return $aspect->canBeUsedBy($user);
-            })
             ->each(function (SearchAspect $aspect) use ($query, $user, $searchResults) {
                 $searchResults->addResults($aspect->getType(), $aspect->getResults($query, $user));
             });

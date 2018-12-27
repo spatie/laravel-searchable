@@ -3,7 +3,6 @@
 namespace Spatie\Searchable;
 
 use Illuminate\Support\Collection;
-use Illuminate\Foundation\Auth\User;
 
 abstract class SearchAspect
 {

@@ -35,7 +35,7 @@ class SearchTest extends TestCase
 
         $search = new Search();
 
-        $search->registerModel(TestModel::class, function(ModelSearchAspect $modelSearchAspect) {
+        $search->registerModel(TestModel::class, function (ModelSearchAspect $modelSearchAspect) {
             return $modelSearchAspect->addSearchableAttribute('name');
         });
 

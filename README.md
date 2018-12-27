@@ -63,7 +63,7 @@ interface Searchable
 }
 ```
 
-You'll only need to add a `getSearchResult` function that must return an instance of `SearchResult`. Here's how it could look like for a a blog post model.
+You'll only need to add a `getSearchResult` function that must return an instance of `SearchResult`. Here's how it could look like for a blog post model.
 
 ```php
 use Spatie\Searchable\Searchable;
@@ -126,24 +126,27 @@ $searchResults = (new Search())
 
 ### Creating custom search aspects
 
-You are not limited to only registering basic models as search aspects. You can easily create your own, custom search aspects by extending the `SearchAspect` class. After that you can register your custom search aspect using the `Search::registerSearchAspect()` method in any service provider.
+You are not limited to only registering basic models as search aspects. You can easily create your own, custom search aspects by extending the `SearchAspect` class.
 
 Consider the following custom search aspect to search an external API:
 
 ```php
-
 class OrderSearchAspect extends SearchAspect
 {
-    public function getResults(string $term, User $user): Collection
+    public function getResults(string $term): Collection
     {
         return OrderApi::searchOrders($term);
     }
 }
 ```
 
+This is how you can use it:
+
 ```php
-Search::registerSearchAspect(OrderSearchAspect::class);
-``` 
+$searchResults = (new Search())
+   ->registerAspect(OrderSearchAspect::class)
+   ->search('john')
+```
 
 ### Testing
 

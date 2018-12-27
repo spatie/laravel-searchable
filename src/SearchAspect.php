@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User;
 
 abstract class SearchAspect
 {
-    abstract public function getResults(string $term, ?User $user = null): Collection;
+    abstract public function getResults(string $term): Collection;
 
     public function getType(): string
     {

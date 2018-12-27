@@ -19,7 +19,7 @@ class CustomNameSearchAspect extends SearchAspect
         ];
     }
 
-    public function getResults(string $term, ?User $user = null): Collection
+    public function getResults(string $term): Collection
     {
         return collect($this->accounts)
             ->filter(function (Account $account) use ($term) {

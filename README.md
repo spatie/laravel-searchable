@@ -90,7 +90,7 @@ class BlogPost extends Model implements Searchable
 With the models prepared you can search them like this:
 
 ```php
-$searchResults = (new Search();
+$searchResults = (new Search())
    ->registerModel(User::class, 'name');
    ->search('john');
 ```
@@ -102,13 +102,13 @@ You can also pass multiple attributes
 ```php
 // use multiple arguments
 
-$searchResults = (new Search();
+$searchResults = (new Search())
    ->registerModel(User::class, 'first_name', 'last_name');
    ->search('john');
    
 // or use an array
 
-$searchResults = (new Search();
+$searchResults = (new Search())
    ->registerModel(User::class, ['first_name', 'last_name']);
    ->search('john');
 ```

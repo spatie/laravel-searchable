@@ -10,7 +10,7 @@ This package makes it easy to get structured search from a variety of sources. H
 
 ```php
 $searchResults = (new Search())
-   ->registerModel(User::class, 'name');
+   ->registerModel(User::class, 'name')
    ->registerModel(BlogPost::class, 'title')
    ->search('john');
 ```
@@ -76,7 +76,7 @@ class BlogPost extends Model implements Searchable
          return new \Spatie\Searchable\SearchResult(
             $this,
             $this->title,
-            $url,
+            $url
          );
      }
 }
@@ -88,7 +88,7 @@ With the models prepared you can search them like this:
 
 ```php
 $searchResults = (new Search())
-   ->registerModel(User::class, 'name');
+   ->registerModel(User::class, 'name')
    ->search('john');
 ```
 
@@ -100,13 +100,13 @@ You can also pass multiple attributes to search through:
 // use multiple model attributes
 
 $searchResults = (new Search())
-   ->registerModel(User::class, 'first_name', 'last_name');
+   ->registerModel(User::class, 'first_name', 'last_name')
    ->search('john');
    
 // or use an array of model attributes
 
 $searchResults = (new Search())
-   ->registerModel(User::class, ['first_name', 'last_name']);
+   ->registerModel(User::class, ['first_name', 'last_name'])
    ->search('john');
 ```
 
@@ -116,7 +116,7 @@ To get fine grained control you can also use a callable. This way you can also s
 $searchResults = (new Search())
    ->registerModel(User::class, function(ModelSearchAspect $modelSearchAspect) {
        $modelSearchAspect
-          ->addSearchableProperty('name'); // return results for partial matches on usernames
+          ->addSearchableProperty('name') // return results for partial matches on usernames
           ->addExactSearchableProperty('email'); // only return results that exactly match the e-mail address
 });
 ```

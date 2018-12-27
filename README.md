@@ -102,13 +102,13 @@ You can also pass multiple attributes
 ```php
 // use multiple arguments
 
-$searchResults = (new Search();
+$searchResults = (new Search())
    ->registerModel(User::class, 'first_name', 'last_name');
    ->search('john');
    
 // or use an array
 
-$searchResults = (new Search();
+$searchResults = (new Search())
    ->registerModel(User::class, ['first_name', 'last_name']);
    ->search('john');
 ```
@@ -116,9 +116,12 @@ $searchResults = (new Search();
 To get fine grained control you can also use a callable. This way you can also search for exact matches.
 
 ```php
-Search::registerModel(User::class)
-    ->addSearchableProperty('name'); // return results for partial matches on usernames
-    ->addExactSearchableProperty('email') // only return results that exactly match the e-mail address
+$searchResults = (new Search())
+   ->registerModel(User::class, function(ModelSearchAspact $modelSearchAspect) {
+       $modelSearchAspect
+          ->addSearchableProperty('name'); // return results for partial matches on usernames
+          ->addExactSearchableProperty('email'); // only return results that exactly match the e-mail address
+});
 ```
 
 ### Creating custom search aspects

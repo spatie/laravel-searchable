@@ -30,6 +30,10 @@ class Search
             $attributes = $attributes[0];
         }
 
+        if (is_array(array_get($attributes, 0))) {
+            $attributes = $attributes[0];
+        }
+
         $searchAspect = new ModelSearchAspect($modelClass, $attributes);
 
         $this->registerAspect($searchAspect);

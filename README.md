@@ -116,8 +116,8 @@ To get fine grained control you can also use a callable. This way you can also s
 $searchResults = (new Search())
    ->registerModel(User::class, function(ModelSearchAspect $modelSearchAspect) {
        $modelSearchAspect
-          ->addSearchableProperty('name') // return results for partial matches on usernames
-          ->addExactSearchableProperty('email'); // only return results that exactly match the e-mail address
+          ->addSearchableAttribute('name') // return results for partial matches on usernames
+          ->addExactSearchableAttribute('email'); // only return results that exactly match the e-mail address
 });
 ```
 

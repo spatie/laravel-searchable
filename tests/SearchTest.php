@@ -2,6 +2,7 @@
 
 namespace Spatie\Searchable\Tests;
 
+use Illuminate\Database\Eloquent\Model;
 use ReflectionObject;
 use Spatie\Searchable\Search;
 use Spatie\Searchable\ModelSearchAspect;
@@ -124,6 +125,44 @@ class SearchTest extends TestCase
         $search = new Search();
 
         $search->registerModel(TestModel::class, 'name', 'email');
+
+        $aspect = array_first($search->getSearchAspects());
+
+        $refObject = new ReflectionObject($aspect);
+        $refProperty = $refObject->getProperty('attributes');
+        $refProperty->setAccessible(true);
+        $attributes = $refProperty->getValue($aspect);
+
+        $this->assertCount(2, $attributes);
+    }
+
+    /** @test */
+    public function it_can_register_a_model_search_aspect_with_an_array_of_attributes()
+    {
+        $search = new Search();
+
+        $search->registerModel(TestModel::class, ['name', 'email']);
+
+        $aspect = array_first($search->getSearchAspects());
+
+        $refObject = new ReflectionObject($aspect);
+        $refProperty = $refObject->getProperty('attributes');
+        $refProperty->setAccessible(true);
+        $attributes = $refProperty->getValue($aspect);
+
+        $this->assertCount(2, $attributes);
+    }
+
+    /** @test */
+    public function it_can_register_a_model_search_aspect_with_a_attributes_from_a_callback()
+    {
+        $search = new Search();
+
+        $search->registerModel(TestModel::class, function (ModelSearchAspect $modelSearchAspect) {
+            $modelSearchAspect
+                ->addSearchableAttribute('name')
+                ->addExactSearchableAttribute('email');
+        });
 
         $aspect = array_first($search->getSearchAspects());
 

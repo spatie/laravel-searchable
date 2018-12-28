@@ -29,7 +29,7 @@ There are {{ $searchResults->count() }} results.
    
    @foreach($modelSearchResults as $searchResult)
        <ul>
-            <li><a href="{{ $searchResult->url }}">{{ $searchResult->name }}</a></li>
+            <li><a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a></li>
        </ul>
    @endforeach
 @endforeach
@@ -159,7 +159,7 @@ There are {{ $searchResults->count() }} results.
    
    @foreach($modelSearchResults as $searchResult)
        <ul>
-            <a href="{{ $searchResult->url }}">{{ $searchResult->name }}</a>
+            <a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a>
        </ul>
    @endforeach
 @endforeach

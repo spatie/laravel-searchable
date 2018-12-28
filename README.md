@@ -10,9 +10,9 @@ This package makes it easy to get structured search from a variety of sources. H
 
 ```php
 $searchResults = (new Search())
-   ->registerModel(User::class, 'name');
+   ->registerModel(User::class, 'name')
    ->registerModel(BlogPost::class, 'title')
-   ->search('john');
+   ->perform('john');
 ```
 
 The search will be performed case insensitive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute and `BlogPost`s that contain 'john' in the `title` attribute.
@@ -29,7 +29,7 @@ There are {{ $searchResults->count() }} results.
    
    @foreach($modelSearchResults as $searchResult)
        <ul>
-            <li><a href="{{ $searchResult->url }}">{{ $searchResult->name }}</a></li>
+            <li><a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a></li>
        </ul>
    @endforeach
 @endforeach
@@ -76,7 +76,7 @@ class BlogPost extends Model implements Searchable
          return new \Spatie\Searchable\SearchResult(
             $this,
             $this->title,
-            $url,
+            $url
          );
      }
 }
@@ -89,7 +89,7 @@ With the models prepared you can search them like this:
 ```php
 $searchResults = (new Search())
    ->registerModel(User::class, 'name');
-   ->search('john');
+   ->perform('john');
 ```
 
 The search will be performed case insensitive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute.
@@ -101,7 +101,7 @@ You can also pass multiple attributes to search through:
 
 $searchResults = (new Search())
    ->registerModel(User::class, 'first_name', 'last_name');
-   ->search('john');
+   ->perform('john');
    
 // or use an array of model attributes
 
@@ -142,7 +142,7 @@ This is how you can use it:
 ```php
 $searchResults = (new Search())
    ->registerAspect(OrderSearchAspect::class)
-   ->search('john')
+   ->perform('john')
 ```
 
 ### Rendering search results
@@ -159,7 +159,7 @@ There are {{ $searchResults->count() }} results.
    
    @foreach($modelSearchResults as $searchResult)
        <ul>
-            <a href="{{ $searchResult->url }}">{{ $searchResult->name }}</a>
+            <a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a>
        </ul>
    @endforeach
 @endforeach

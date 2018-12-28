@@ -46,6 +46,11 @@ class Search
         return $this->aspects;
     }
 
+    public function search(string $query, ?User $user = null): SearchResultCollection
+    {
+        return $this->perform($query, $user);
+    }
+
     public function perform(string $query, ?User $user = null): SearchResultCollection
     {
         $searchResults = new SearchResultCollection();

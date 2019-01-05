@@ -94,7 +94,7 @@ class ModelSearchAspect extends SearchAspect
         $attributes = $this->attributes;
         $searchTerms = explode(' ', $term);
 
-        $query->where(function (Builder $query) use($attributes, $term, $searchTerms) {
+        $query->where(function (Builder $query) use ($attributes, $term, $searchTerms) {
             foreach (array_wrap($attributes) as $attribute) {
                 foreach ($searchTerms as $searchTerm) {
                     $sql = "LOWER({$attribute->getAttribute()}) LIKE ?";

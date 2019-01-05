@@ -22,7 +22,7 @@ class TestCase extends Orchestra
             $table->increments('id');
             $table->timestamps();
             $table->string('name');
-            $table->string('last_name');
+            $table->string('last_name')->nullable();
         });
     }
 }

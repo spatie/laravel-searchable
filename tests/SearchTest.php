@@ -2,7 +2,6 @@
 
 namespace Spatie\Searchable\Tests;
 
-use Illuminate\Database\Eloquent\Model;
 use ReflectionObject;
 use Spatie\Searchable\Search;
 use Spatie\Searchable\ModelSearchAspect;

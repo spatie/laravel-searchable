@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.2.0 - 2019-01-11
+
+- search with multiple keywords on multiple columns
+
 ## 1.1.0 - 2018-12-28
 
 - add preferred `search()` method (alias for `perform()`)

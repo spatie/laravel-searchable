@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.2.1 - 2019-01-14
+
+- fix: the closure for registering a model search aspect can no longer be a global function
+
 ## 1.2.0 - 2019-01-11
 
 - search with multiple keywords on multiple columns

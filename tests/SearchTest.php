@@ -28,6 +28,16 @@ class SearchTest extends TestCase
     }
 
     /** @test */
+    public function it_can_register_a_model_search_aspect_attribute_thats_also_a_global_function()
+    {
+        $search = new Search();
+
+        $search->registerModel(TestModel::class, 'phpinfo');
+
+        $this->assertCount(1, $search->getSearchAspects());
+    }
+
+    /** @test */
     public function a_model_search_aspect_can_be_configured_using_a_closure()
     {
         TestModel::createWithName('john doe');

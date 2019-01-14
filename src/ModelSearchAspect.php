@@ -42,12 +42,22 @@ class ModelSearchAspect extends SearchAspect
 
         if (is_array($attributes)) {
             $this->attributes = SearchableAttribute::createMany($attributes);
+
+            return;
+        }
+
+        if (is_string($attributes)) {
+            $this->attributes = SearchableAttribute::create($attributes);
+
+            return;
         }
 
         if (is_callable($attributes)) {
             $callable = $attributes;
 
             $callable($this);
+
+            return;
         }
     }
 

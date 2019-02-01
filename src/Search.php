@@ -2,6 +2,7 @@
 
 namespace Spatie\Searchable;
 
+use Illuminate\Support\Arr;
 use Illuminate\Foundation\Auth\User;
 
 class Search
@@ -30,7 +31,7 @@ class Search
             $attributes = $attributes[0];
         }
 
-        if (is_array(array_get($attributes, 0))) {
+        if (is_array(Arr::get($attributes, 0))) {
             $attributes = $attributes[0];
         }
 

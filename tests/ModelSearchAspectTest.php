@@ -3,6 +3,7 @@
 namespace Spatie\Searchable\Tests;
 
 use ReflectionObject;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\ModelSearchAspect;
@@ -72,7 +73,7 @@ class ModelSearchAspectTest extends TestCase
 
         $expectedQuery = 'select * from "test_models" where (LOWER(name) LIKE ? or "email" = ?)';
 
-        $executedQuery = array_get(DB::getQueryLog(), '0.query');
+        $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
 
         $this->assertEquals($expectedQuery, $executedQuery);
     }

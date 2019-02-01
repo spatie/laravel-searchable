@@ -2,6 +2,7 @@
 
 namespace Spatie\Searchable\Tests\stubs;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Spatie\Searchable\SearchAspect;
 
@@ -22,7 +23,7 @@ class CustomNameSearchAspect extends SearchAspect
     {
         return collect($this->accounts)
             ->filter(function (Account $account) use ($term) {
-                return str_contains($account->name, $term);
+                return Str::contains($account->name, $term);
             });
     }
 }

@@ -3,6 +3,7 @@
 namespace Spatie\Searchable\Tests;
 
 use ReflectionObject;
+use Illuminate\Support\Arr;
 use Spatie\Searchable\Search;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Tests\Models\TestModel;
@@ -98,7 +99,7 @@ class SearchTest extends TestCase
         $aspects = $search->getSearchAspects();
 
         $this->assertCount(1, $aspects);
-        $this->assertInstanceOf(CustomNameSearchAspect::class, array_first($aspects));
+        $this->assertInstanceOf(CustomNameSearchAspect::class, Arr::first($aspects));
     }
 
     /** @test */
@@ -111,7 +112,7 @@ class SearchTest extends TestCase
         $aspects = $search->getSearchAspects();
 
         $this->assertCount(1, $aspects);
-        $this->assertInstanceOf(CustomNameSearchAspect::class, array_first($aspects));
+        $this->assertInstanceOf(CustomNameSearchAspect::class, Arr::first($aspects));
     }
 
     /** @test */
@@ -124,8 +125,8 @@ class SearchTest extends TestCase
         $aspects = $search->getSearchAspects();
 
         $this->assertCount(1, $aspects);
-        $this->assertInstanceOf(ModelSearchAspect::class, array_first($aspects));
-        $this->assertEquals('test_models', array_first($aspects)->getType());
+        $this->assertInstanceOf(ModelSearchAspect::class, Arr::first($aspects));
+        $this->assertEquals('test_models', Arr::first($aspects)->getType());
     }
 
     /** @test */
@@ -135,7 +136,7 @@ class SearchTest extends TestCase
 
         $search->registerModel(TestModel::class, 'name', 'email');
 
-        $aspect = array_first($search->getSearchAspects());
+        $aspect = Arr::first($search->getSearchAspects());
 
         $refObject = new ReflectionObject($aspect);
         $refProperty = $refObject->getProperty('attributes');
@@ -152,7 +153,7 @@ class SearchTest extends TestCase
 
         $search->registerModel(TestModel::class, ['name', 'email']);
 
-        $aspect = array_first($search->getSearchAspects());
+        $aspect = Arr::first($search->getSearchAspects());
 
         $refObject = new ReflectionObject($aspect);
         $refProperty = $refObject->getProperty('attributes');
@@ -173,7 +174,7 @@ class SearchTest extends TestCase
                 ->addExactSearchableAttribute('email');
         });
 
-        $aspect = array_first($search->getSearchAspects());
+        $aspect = Arr::first($search->getSearchAspects());
 
         $refObject = new ReflectionObject($aspect);
         $refProperty = $refObject->getProperty('attributes');

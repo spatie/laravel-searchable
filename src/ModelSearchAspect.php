@@ -2,6 +2,7 @@
 
 namespace Spatie\Searchable;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Model;
@@ -105,7 +106,7 @@ class ModelSearchAspect extends SearchAspect
         $searchTerms = explode(' ', $term);
 
         $query->where(function (Builder $query) use ($attributes, $term, $searchTerms) {
-            foreach (array_wrap($attributes) as $attribute) {
+            foreach (Arr::wrap($attributes) as $attribute) {
                 foreach ($searchTerms as $searchTerm) {
                     $sql = "LOWER({$attribute->getAttribute()}) LIKE ?";
                     $searchTerm = mb_strtolower($searchTerm, 'UTF8');

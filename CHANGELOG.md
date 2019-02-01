@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.2.2 - 2019-02-01
+
+- use Str:: and Arr:: instead of helper methods
+
 ## 1.2.1 - 2019-01-14
 
 - fix: the closure for registering a model search aspect can no longer be a global function

@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.2.3 - 2019-02-27
+
+- add support for Laravel 5.8
+- add support for PHPUnit 8.0
+
 ## 1.2.2 - 2019-02-01
 
 - use Str:: and Arr:: instead of helper methods

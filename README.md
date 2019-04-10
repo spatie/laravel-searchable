@@ -165,12 +165,12 @@ There are {{ $searchResults->count() }} results.
 @endforeach
 ```
 
-You can customize the `$type` by adding a static property `$searchType` on your model or custom search aspect
+You can customize the `$type` by adding a public property `$searchableType` on your model or custom search aspect
 
 ```php
 class BlogPost extends Model implements Searchable
 {
-    static $searchType = 'custom named aspect';
+    public $searchableType = 'custom named aspect';
 }
 ```
 

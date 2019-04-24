@@ -3,6 +3,7 @@
 namespace Spatie\Searchable\Tests;
 
 use ReflectionObject;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\ModelSearchAspect;
@@ -21,6 +22,20 @@ class ModelSearchAspectTest extends TestCase
         $searchAspect = ModelSearchAspect::forModel(TestModel::class, 'name');
 
         $results = $searchAspect->getResults('john');
+
+        $this->assertCount(1, $results);
+        $this->assertInstanceOf(TestModel::class, $results[0]);
+    }
+
+    /** @test */
+    public function it_can_perform_a_search_on_multiple_columns()
+    {
+        TestModel::createWithNameAndLastName('jane', 'doe');
+        TestModel::createWithNameAndLastName('Taylor', 'Otwell');
+
+        $searchAspect = ModelSearchAspect::forModel(TestModel::class, 'name', 'last_name');
+
+        $results = $searchAspect->getResults('Taylor Otwell');
 
         $this->assertCount(1, $results);
         $this->assertInstanceOf(TestModel::class, $results[0]);
@@ -56,9 +71,9 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('john');
 
-        $expectedQuery = 'select * from "test_models" where LOWER(name) LIKE ? or "email" = ?';
+        $expectedQuery = 'select * from "test_models" where (LOWER(name) LIKE ? or "email" = ?)';
 
-        $executedQuery = array_get(DB::getQueryLog(), '0.query');
+        $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
 
         $this->assertEquals($expectedQuery, $executedQuery);
     }

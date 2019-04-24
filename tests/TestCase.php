@@ -9,7 +9,7 @@ use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -22,6 +22,7 @@ class TestCase extends Orchestra
             $table->increments('id');
             $table->timestamps();
             $table->string('name');
+            $table->string('last_name')->nullable();
         });
     }
 }

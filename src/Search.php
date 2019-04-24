@@ -2,6 +2,7 @@
 
 namespace Spatie\Searchable;
 
+use Illuminate\Support\Arr;
 use Illuminate\Foundation\Auth\User;
 
 class Search
@@ -30,6 +31,10 @@ class Search
             $attributes = $attributes[0];
         }
 
+        if (is_array(Arr::get($attributes, 0))) {
+            $attributes = $attributes[0];
+        }
+
         $searchAspect = new ModelSearchAspect($modelClass, $attributes);
 
         $this->registerAspect($searchAspect);
@@ -40,6 +45,11 @@ class Search
     public function getSearchAspects(): array
     {
         return $this->aspects;
+    }
+
+    public function search(string $query, ?User $user = null): SearchResultCollection
+    {
+        return $this->perform($query, $user);
     }
 
     public function perform(string $query, ?User $user = null): SearchResultCollection

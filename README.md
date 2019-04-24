@@ -10,12 +10,12 @@ This package makes it easy to get structured search from a variety of sources. H
 
 ```php
 $searchResults = (new Search())
-   ->registerModel(User::class, 'name');
+   ->registerModel(User::class, 'name')
    ->registerModel(BlogPost::class, 'title')
    ->search('john');
 ```
 
-The search will be performed case insenstive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute and `BlogPost`s that contain 'john' in the `title` attribute.
+The search will be performed case insensitive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute and `BlogPost`s that contain 'john' in the `title` attribute.
 
 In your view you can now loop over the search results:
 
@@ -29,7 +29,7 @@ There are {{ $searchResults->count() }} results.
    
    @foreach($modelSearchResults as $searchResult)
        <ul>
-            <a href="{{ $searchResult->url }}">{{ $searchResult->name }}</a>
+            <li><a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a></li>
        </ul>
    @endforeach
 @endforeach
@@ -48,8 +48,6 @@ composer require spatie/laravel-searchable
 
 ## Usage
 
-### Searching models
-
 ### Preparing your models
 
 In order to search through models you'll have to let them implement the `Searchable` interface.
@@ -63,7 +61,7 @@ interface Searchable
 }
 ```
 
-You'll only need to add a `getSearchResult` function that must return an instance of `SearchResult`. Here's how it could look like for a blog post model.
+You'll only need to add a `getSearchResult` method to each searchable model that must return an instance of `SearchResult`. Here's how it could look like for a blog post model.
 
 ```php
 use Spatie\Searchable\Searchable;
@@ -78,12 +76,11 @@ class BlogPost extends Model implements Searchable
          return new \Spatie\Searchable\SearchResult(
             $this,
             $this->title,
-            $url,
+            $url
          );
      }
 }
 ```
-
 
 ### Searching models
 
@@ -91,25 +88,25 @@ With the models prepared you can search them like this:
 
 ```php
 $searchResults = (new Search())
-   ->registerModel(User::class, 'name');
+   ->registerModel(User::class, 'name')
    ->search('john');
 ```
 
-The search will be performed case insenstive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute.
+The search will be performed case insensitive. `$searchResults` now contains all `User` models that contain `john` in the `name` attribute.
 
-You can also pass multiple attributes.
+You can also pass multiple attributes to search through:
 
 ```php
-// use multiple arguments
+// use multiple model attributes
 
 $searchResults = (new Search())
-   ->registerModel(User::class, 'first_name', 'last_name');
+   ->registerModel(User::class, 'first_name', 'last_name')
    ->search('john');
    
-// or use an array
+// or use an array of model attributes
 
 $searchResults = (new Search())
-   ->registerModel(User::class, ['first_name', 'last_name']);
+   ->registerModel(User::class, ['first_name', 'last_name'])
    ->search('john');
 ```
 
@@ -119,8 +116,8 @@ To get fine grained control you can also use a callable. This way you can also s
 $searchResults = (new Search())
    ->registerModel(User::class, function(ModelSearchAspect $modelSearchAspect) {
        $modelSearchAspect
-          ->addSearchableProperty('name'); // return results for partial matches on usernames
-          ->addExactSearchableProperty('email'); // only return results that exactly match the e-mail address
+          ->addSearchableAttribute('name') // return results for partial matches on usernames
+          ->addExactSearchableAttribute('email'); // only return results that exactly match the e-mail address
 });
 ```
 
@@ -150,7 +147,7 @@ $searchResults = (new Search())
 
 ### Rendering search results
 
-Here's an example of how you can render search results:
+Here's an example on rendering search results:
 
 ```html
 <h1>Search</h1>
@@ -162,18 +159,18 @@ There are {{ $searchResults->count() }} results.
    
    @foreach($modelSearchResults as $searchResult)
        <ul>
-            <a href="{{ $searchResult->url }}">{{ $searchResult->name }}</a>
+            <a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a>
        </ul>
    @endforeach
 @endforeach
 ```
 
-You can customize the `$type` by adding a static property `$searchType` on your model or custom search aspect
+You can customize the `$type` by adding a public property `$searchableType` on your model or custom search aspect
 
 ```php
 class BlogPost extends Model implements Searchable
 {
-    static $searchType = 'custom named aspect';
+    public $searchableType = 'custom named aspect';
 }
 ```
 

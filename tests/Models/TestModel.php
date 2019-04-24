@@ -17,6 +17,14 @@ class TestModel extends Model implements Searchable
         ]);
     }
 
+    public static function createWithNameAndLastName(string $name, $lastName): self
+    {
+        return static::create([
+            'name' => $name,
+            'last_name' => $lastName,
+        ]);
+    }
+
     public function getSearchResult(): SearchResult
     {
         return new SearchResult($this, $this->name);

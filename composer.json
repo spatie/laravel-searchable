@@ -1,6 +1,6 @@
 {
     "name": "spatie/laravel-searchable",
-    "description": "An easy way to search multiple models",
+    "description": "Pragmatically search through models and other sources",
     "keywords": [
         "spatie",
         "laravel-searchable"
@@ -22,13 +22,13 @@
         }
     ],
     "require": {
-        "php": "^7.1",
-        "laravel/framework": "~5.5.0|~5.6.0|~5.7.0"
+        "php": "^7.2",
+        "laravel/framework": "~5.8.0"
     },
     "require-dev": {
-        "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
+        "orchestra/testbench": "~3.8.0",
         "larapack/dd": "^1.0",
-        "phpunit/phpunit": "^7.0"
+        "phpunit/phpunit": "^7.5|^8.0"
     },
     "autoload": {
         "psr-4": {

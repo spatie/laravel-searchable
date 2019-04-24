@@ -2,6 +2,7 @@
 
 namespace Spatie\Searchable;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 
 abstract class SearchAspect
@@ -16,10 +17,10 @@ abstract class SearchAspect
 
         $className = class_basename(static::class);
 
-        $type = str_before($className, 'SearchAspect');
+        $type = Str::before($className, 'SearchAspect');
 
-        $type = snake_case(str_plural($type));
+        $type = Str::snake(Str::plural($type));
 
-        return str_plural($type);
+        return Str::plural($type);
     }
 }

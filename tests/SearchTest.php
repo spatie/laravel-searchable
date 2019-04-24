@@ -3,6 +3,7 @@
 namespace Spatie\Searchable\Tests;
 
 use ReflectionObject;
+use Illuminate\Support\Arr;
 use Spatie\Searchable\Search;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Tests\Models\TestModel;
@@ -25,6 +26,16 @@ class SearchTest extends TestCase
         $this->assertCount(1, $results);
         $this->assertArrayHasKey('test_models', $results->groupByType());
         $this->assertCount(1, $results->aspect('test_models'));
+    }
+
+    /** @test */
+    public function it_can_register_a_model_search_aspect_attribute_thats_also_a_global_function()
+    {
+        $search = new Search();
+
+        $search->registerModel(TestModel::class, 'phpinfo');
+
+        $this->assertCount(1, $search->getSearchAspects());
     }
 
     /** @test */
@@ -88,7 +99,7 @@ class SearchTest extends TestCase
         $aspects = $search->getSearchAspects();
 
         $this->assertCount(1, $aspects);
-        $this->assertInstanceOf(CustomNameSearchAspect::class, array_first($aspects));
+        $this->assertInstanceOf(CustomNameSearchAspect::class, Arr::first($aspects));
     }
 
     /** @test */
@@ -101,7 +112,7 @@ class SearchTest extends TestCase
         $aspects = $search->getSearchAspects();
 
         $this->assertCount(1, $aspects);
-        $this->assertInstanceOf(CustomNameSearchAspect::class, array_first($aspects));
+        $this->assertInstanceOf(CustomNameSearchAspect::class, Arr::first($aspects));
     }
 
     /** @test */
@@ -114,8 +125,8 @@ class SearchTest extends TestCase
         $aspects = $search->getSearchAspects();
 
         $this->assertCount(1, $aspects);
-        $this->assertInstanceOf(ModelSearchAspect::class, array_first($aspects));
-        $this->assertEquals('test_models', array_first($aspects)->getType());
+        $this->assertInstanceOf(ModelSearchAspect::class, Arr::first($aspects));
+        $this->assertEquals('test_models', Arr::first($aspects)->getType());
     }
 
     /** @test */
@@ -125,7 +136,45 @@ class SearchTest extends TestCase
 
         $search->registerModel(TestModel::class, 'name', 'email');
 
-        $aspect = array_first($search->getSearchAspects());
+        $aspect = Arr::first($search->getSearchAspects());
+
+        $refObject = new ReflectionObject($aspect);
+        $refProperty = $refObject->getProperty('attributes');
+        $refProperty->setAccessible(true);
+        $attributes = $refProperty->getValue($aspect);
+
+        $this->assertCount(2, $attributes);
+    }
+
+    /** @test */
+    public function it_can_register_a_model_search_aspect_with_an_array_of_attributes()
+    {
+        $search = new Search();
+
+        $search->registerModel(TestModel::class, ['name', 'email']);
+
+        $aspect = Arr::first($search->getSearchAspects());
+
+        $refObject = new ReflectionObject($aspect);
+        $refProperty = $refObject->getProperty('attributes');
+        $refProperty->setAccessible(true);
+        $attributes = $refProperty->getValue($aspect);
+
+        $this->assertCount(2, $attributes);
+    }
+
+    /** @test */
+    public function it_can_register_a_model_search_aspect_with_a_attributes_from_a_callback()
+    {
+        $search = new Search();
+
+        $search->registerModel(TestModel::class, function (ModelSearchAspect $modelSearchAspect) {
+            $modelSearchAspect
+                ->addSearchableAttribute('name')
+                ->addExactSearchableAttribute('email');
+        });
+
+        $aspect = Arr::first($search->getSearchAspects());
 
         $refObject = new ReflectionObject($aspect);
         $refProperty = $refObject->getProperty('attributes');

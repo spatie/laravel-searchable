@@ -142,7 +142,7 @@ This is how you can use it:
 ```php
 $searchResults = (new Search())
    ->registerAspect(OrderSearchAspect::class)
-   ->search('john')
+   ->search('john');
 ```
 
 ### Rendering search results

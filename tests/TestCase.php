@@ -24,5 +24,11 @@ class TestCase extends Orchestra
             $table->string('name');
             $table->string('last_name')->nullable();
         });
+
+        Schema::create('test_comments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->unsignedInteger('test_model_id');
+        });
     }
 }

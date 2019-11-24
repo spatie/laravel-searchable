@@ -29,6 +29,37 @@ class SearchTest extends TestCase
     }
 
     /** @test */
+    function it_can_apply_scopes_and_eager_load_relationships_to_a_model_search_aspect()
+    {
+        $john = tap(TestModel::createWithName('john doe'), function ($model) {
+            $model->update(['active' => true]);
+            $model->comments()->create();
+        });
+
+        TestModel::createWithName('jane doe');
+        TestModel::createWithName('john doe without comments');
+
+        $search = new Search();
+
+        $search->registerModel(TestModel::class, function (ModelSearchAspect $aspect) {
+            $aspect->addSearchableAttribute('name')
+                ->active()
+                ->has('comments')
+                ->with('comments');
+        });
+
+        $results = $search->perform('doe');
+
+        $this->assertCount(1, $results);
+        $this->assertArrayHasKey('test_models', $results->groupByType());
+        $this->assertCount(1, $results->aspect('test_models'));
+
+        $searchableFound = $results->aspect('test_models')[0]->searchable;
+        $this->assertTrue($searchableFound->is($john));
+        $this->assertTrue($searchableFound->relationLoaded('comments'));
+    }
+
+    /** @test */
     public function it_can_register_a_model_search_aspect_attribute_thats_also_a_global_function()
     {
         $search = new Search();

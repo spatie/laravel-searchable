@@ -22,7 +22,7 @@ class ModelSearchAspect extends SearchAspect
     protected $attributes = [];
 
     /** @var array */
-    public $callsToForward = [];
+    protected $callsToForward = [];
 
     public static function forModel(string $model, ...$attributes): self
     {

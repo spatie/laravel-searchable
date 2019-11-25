@@ -79,7 +79,7 @@ class ModelSearchAspectTest extends TestCase
     }
 
     /** @test */
-    function it_can_build_an_eloquent_query_to_eager_load_relationships()
+    public function it_can_build_an_eloquent_query_to_eager_load_relationships()
     {
         $model = TestModel::createWithName('john');
 
@@ -92,7 +92,7 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('john');
 
-        $expectedQuery = 'select * from "test_comments" where "test_comments"."test_model_id" in (' . $model->id . ')';
+        $expectedQuery = 'select * from "test_comments" where "test_comments"."test_model_id" in ('.$model->id.')';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '1.query');
 
@@ -100,7 +100,7 @@ class ModelSearchAspectTest extends TestCase
     }
 
     /** @test */
-    function it_can_build_an_eloquent_query_applying_scopes()
+    public function it_can_build_an_eloquent_query_applying_scopes()
     {
         $searchAspect = ModelSearchAspect::forModel(TestModel::class)
             ->addSearchableAttribute('name', true)

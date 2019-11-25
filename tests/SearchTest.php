@@ -29,7 +29,7 @@ class SearchTest extends TestCase
     }
 
     /** @test */
-    function it_can_apply_scopes_and_eager_load_relationships_to_a_model_search_aspect()
+    public function it_can_apply_scopes_and_eager_load_relationships_to_a_model_search_aspect()
     {
         $john = tap(TestModel::createWithName('john doe'), function ($model) {
             $model->update(['active' => true]);

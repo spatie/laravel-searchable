@@ -2,7 +2,7 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
-## 1.4.1 - 2019-12-15
+## 1.5.0 - 2019-12-15
 
 - allow applying query scopes and eager loading relationships (#44)
 

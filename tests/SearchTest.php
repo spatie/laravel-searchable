@@ -2,10 +2,10 @@
 
 namespace Spatie\Searchable\Tests;
 
-use ReflectionObject;
 use Illuminate\Support\Arr;
-use Spatie\Searchable\Search;
+use ReflectionObject;
 use Spatie\Searchable\ModelSearchAspect;
+use Spatie\Searchable\Search;
 use Spatie\Searchable\Tests\Models\TestModel;
 use Spatie\Searchable\Tests\stubs\CustomNameSearchAspect;
 

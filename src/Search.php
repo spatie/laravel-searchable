@@ -2,8 +2,8 @@
 
 namespace Spatie\Searchable;
 
-use Illuminate\Support\Arr;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Arr;
 
 class Search
 {

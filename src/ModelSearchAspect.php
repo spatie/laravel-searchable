@@ -2,14 +2,14 @@
 
 namespace Spatie\Searchable;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Foundation\Auth\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Traits\ForwardsCalls;
-use Spatie\Searchable\Exceptions\InvalidSearchableModel;
 use Spatie\Searchable\Exceptions\InvalidModelSearchAspect;
+use Spatie\Searchable\Exceptions\InvalidSearchableModel;
 
 class ModelSearchAspect extends SearchAspect
 {

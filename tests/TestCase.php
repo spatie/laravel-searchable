@@ -2,9 +2,9 @@
 
 namespace Spatie\Searchable\Tests;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra

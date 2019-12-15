@@ -2,8 +2,8 @@
 
 namespace Spatie\Searchable\Tests\stubs;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Spatie\Searchable\SearchAspect;
 
 class CustomNameSearchAspect extends SearchAspect

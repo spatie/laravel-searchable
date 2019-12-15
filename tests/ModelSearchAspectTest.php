@@ -2,14 +2,14 @@
 
 namespace Spatie\Searchable\Tests;
 
-use ReflectionObject;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
+use ReflectionObject;
+use Spatie\Searchable\Exceptions\InvalidModelSearchAspect;
+use Spatie\Searchable\Exceptions\InvalidSearchableModel;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Tests\Models\TestModel;
-use Spatie\Searchable\Exceptions\InvalidSearchableModel;
-use Spatie\Searchable\Exceptions\InvalidModelSearchAspect;
 
 class ModelSearchAspectTest extends TestCase
 {

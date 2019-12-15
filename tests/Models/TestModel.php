@@ -5,6 +5,7 @@ namespace Spatie\Searchable\Tests\Models;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class TestModel extends Model implements Searchable
 {
@@ -28,5 +29,15 @@ class TestModel extends Model implements Searchable
     public function getSearchResult(): SearchResult
     {
         return new SearchResult($this, $this->name);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(TestComment::class);
+    }
+
+    public function scopeActive(Builder $query)
+    {
+        $query->where('active', 1);
     }
 }

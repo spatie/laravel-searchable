@@ -79,6 +79,47 @@ class ModelSearchAspectTest extends TestCase
     }
 
     /** @test */
+    public function it_can_build_an_eloquent_query_to_eager_load_relationships()
+    {
+        $model = TestModel::createWithName('john');
+
+        $searchAspect = ModelSearchAspect::forModel(TestModel::class)
+            ->addSearchableAttribute('name', true)
+            ->addExactSearchableAttribute('email')
+            ->with('comments');
+
+        DB::enableQueryLog();
+
+        $searchAspect->getResults('john');
+
+        $expectedQuery = 'select * from "test_comments" where "test_comments"."test_model_id" in ('.$model->id.')';
+
+        $executedQuery = Arr::get(DB::getQueryLog(), '1.query');
+
+        $this->assertEquals($expectedQuery, $executedQuery);
+    }
+
+    /** @test */
+    public function it_can_build_an_eloquent_query_applying_scopes()
+    {
+        $searchAspect = ModelSearchAspect::forModel(TestModel::class)
+            ->addSearchableAttribute('name', true)
+            ->active();
+
+        DB::enableQueryLog();
+
+        $searchAspect->getResults('john');
+
+        $expectedQuery = 'select * from "test_models" where "active" = ? and (LOWER(name) LIKE ?)';
+
+        $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
+        $firstBinding = Arr::get(DB::getQueryLog(), '0.bindings.0');
+
+        $this->assertEquals($expectedQuery, $executedQuery);
+        $this->assertEquals(1, $firstBinding);
+    }
+
+    /** @test */
     public function it_has_a_type()
     {
         $searchAspect = ModelSearchAspect::forModel(TestModel::class);

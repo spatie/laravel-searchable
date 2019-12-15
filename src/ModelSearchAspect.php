@@ -7,16 +7,22 @@ use Illuminate\Support\Collection;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Traits\ForwardsCalls;
 use Spatie\Searchable\Exceptions\InvalidSearchableModel;
 use Spatie\Searchable\Exceptions\InvalidModelSearchAspect;
 
 class ModelSearchAspect extends SearchAspect
 {
+    use ForwardsCalls;
+
     /** @var \Illuminate\Database\Eloquent\Model */
     protected $model;
 
     /** @var array */
     protected $attributes = [];
+
+    /** @var array */
+    protected $callsToForward = [];
 
     public static function forModel(string $model, ...$attributes): self
     {
@@ -95,6 +101,10 @@ class ModelSearchAspect extends SearchAspect
 
         $query = ($this->model)::query();
 
+        foreach ($this->callsToForward as $method => $parameters) {
+            $this->forwardCallTo($query, $method, $parameters);
+        }
+
         $this->addSearchConditions($query, $term);
 
         return $query->get();
@@ -117,5 +127,12 @@ class ModelSearchAspect extends SearchAspect
                 }
             }
         });
+    }
+
+    public function __call($method, $parameters)
+    {
+        $this->callsToForward[$method] = $parameters;
+
+        return $this;
     }
 }

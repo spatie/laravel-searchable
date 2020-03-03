@@ -10,6 +10,11 @@ All notable changes to `laravel-searchable` will be documented in this file
 
 - allow applying query scopes and eager loading relationships (#44)
 
+## 1.5.0 - 2020-03-03
+
+- add support for Laravel 7
+- fix issue when fuzzy searching model fields (#42)
+
 ## 1.4.0 - 2019-09-04
 
 - add support for Laravel 6

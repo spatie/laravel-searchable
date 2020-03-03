@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.6.1 - 2020-03-03
+
+- revert #42
+
 ## 1.6.0 - 2020-03-03
 
 - add support for Laravel 7

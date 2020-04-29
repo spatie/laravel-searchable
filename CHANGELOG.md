@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.6.2 - 2020-04-29
+
+- escape searchable attributes (#60)
+
 ## 1.6.1 - 2020-03-03
 
 - revert #42

@@ -71,7 +71,7 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('john');
 
-        $expectedQuery = 'select * from "test_models" where (LOWER(name) LIKE ? or "email" = ?)';
+        $expectedQuery = 'select * from "test_models" where (LOWER(`name`) LIKE ? or "email" = ?)';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
 
@@ -110,7 +110,7 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('john');
 
-        $expectedQuery = 'select * from "test_models" where "active" = ? and (LOWER(name) LIKE ?)';
+        $expectedQuery = 'select * from "test_models" where "active" = ? and (LOWER(`name`) LIKE ?)';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
         $firstBinding = Arr::get(DB::getQueryLog(), '0.bindings.0');

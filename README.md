@@ -19,7 +19,7 @@ The search will be performed case insensitive. `$searchResults` now contains all
 
 In your view you can now loop over the search results:
 
-```html
+```blade
 <h1>Search</h1>
 
 There are {{ $searchResults->count() }} results.

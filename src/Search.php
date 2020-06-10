@@ -58,7 +58,7 @@ class Search
 
         collect($this->getSearchAspects())
             ->each(function (SearchAspect $aspect) use ($query, $user, $searchResults) {
-                $searchResults->addResults($aspect->getType(), $aspect->getResults($query, $user));
+                $searchResults->addResults($aspect->getType(), $aspect->getResults($query));
             });
 
         return $searchResults;

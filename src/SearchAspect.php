@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 abstract class SearchAspect
 {
-    abstract public function getResults(string $term): Collection;
+    abstract public function getResults(string $term, ?User $user = null): Collection;
 
     public function getType(): string
     {

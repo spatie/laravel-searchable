@@ -2,6 +2,7 @@
 
 namespace Spatie\Searchable;
 
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 

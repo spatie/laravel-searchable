@@ -24,6 +24,6 @@ class SearchResultCollection extends Collection
 
     public function aspect(string $aspectName): Collection
     {
-        return $this->groupByType()->get($aspectName);
+        return $this->groupByType()->get($aspectName, collect());
     }
 }

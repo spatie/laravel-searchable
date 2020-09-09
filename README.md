@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-searchable.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-searchable)
 ![Test Status](https://img.shields.io/github/workflow/status/spatie/laravel-searchable/run-tests?label=tests&style=flat-square)
-![Code Style Status](https://img.shields.io/github/workflow/status/spatie/laravel-searchable/php-cs-fixer?label=code%20style&style=flat-square)
+![Code Style Status](https://img.shields.io/github/workflow/status/spatie/laravel-searchable/Check%20&%20fix%20styling?label=code%20style&style=flat-square)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-searchable.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-searchable)
 
 This package makes it easy to get structured search from a variety of sources. Here's an example where we search through some models. We already did some small preparation on the models themselves.

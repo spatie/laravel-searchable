@@ -35,7 +35,7 @@ class ModelSearchAspect extends SearchAspect
      *
      * @throws \Spatie\Searchable\Exceptions\InvalidSearchableModel
      */
-    public function __construct(string $model, $attributes = [])
+    public function __construct($model, $attributes = [])
     {
         if (! is_subclass_of($model, Model::class)) {
             throw InvalidSearchableModel::notAModel($model);

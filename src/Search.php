@@ -25,7 +25,7 @@ class Search
         return $this;
     }
 
-    public function registerModel(string $modelClass, ...$attributes): self
+    public function registerModel($modelClass, ...$attributes): self
     {
         if (isset($attributes[0]) && is_callable($attributes[0])) {
             $attributes = $attributes[0];

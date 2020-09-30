@@ -93,7 +93,7 @@ class ModelSearchAspect extends SearchAspect
         return $model->getTable();
     }
 
-    public function getResults(string $term, User $user = null): Collection
+    public function getResults(string $term): Collection
     {
         if (empty($this->attributes)) {
             throw InvalidModelSearchAspect::noSearchableAttributes($this->model);

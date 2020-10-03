@@ -47,6 +47,15 @@ class Search
         return $this->aspects;
     }
 
+    public function setAspectLimit(int $limit) : self
+    {
+        collect($this->getSearchAspects())->each(function(SearchAspect $aspect) use ($limit) {
+           $aspect->limit($limit);
+        });
+
+        return $this;
+    }
+
     public function search(string $query, ?User $user = null): SearchResultCollection
     {
         return $this->perform($query, $user);

@@ -163,7 +163,7 @@ It is possible to limit the amount of results returned by each aspect by calling
 ```php
 $searchResults = (new Search())
     ->registerAspect(BlogPostAspect::class)
-    ->setAspectLimit(50)
+    ->limitAspectResults(50)
     ->search('How To');
 ```
 

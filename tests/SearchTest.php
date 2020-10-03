@@ -231,8 +231,7 @@ class SearchTest extends TestCase
             $modelSearchAspect
                 ->addSearchableAttribute('name');
         });
-        $results = $search->setAspectLimit(2)->perform('android');
-
+        $results = $search->limitAspectResults(2)->perform('android');
         $this->assertCount(2, $results);
     }
 
@@ -251,8 +250,7 @@ class SearchTest extends TestCase
         $search->registerAspect(CustomNameSearchAspect::class);
         // Our limiter should apply to the second aspect registered here and will make it return only 2
         $search->registerModel(TestModel::class, 'name');
-        $results = $search->setAspectLimit(2)->perform('doe');
-
+        $results = $search->limitAspectResults(2)->perform('doe');
         $this->assertCount(4, $results);
     }
 }

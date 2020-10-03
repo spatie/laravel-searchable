@@ -156,6 +156,17 @@ $searchResults = (new Search())
    ->search('john');
 ```
 
+### Limiting aspect results
+
+It is possible to limit the amount of results returned by each aspect by calling `setAspectLimit` prior to performing the search.
+
+```php
+$searchResults = (new Search())
+    ->registerAspect(BlogPostAspect::class)
+    ->setAspectLimit(50)
+    ->search('How To');
+```
+
 ### Rendering search results
 
 Here's an example on rendering search results:

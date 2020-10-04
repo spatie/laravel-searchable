@@ -158,7 +158,7 @@ $searchResults = (new Search())
 
 ### Limiting aspect results
 
-It is possible to limit the amount of results returned by each aspect by calling `setAspectLimit` prior to performing the search.
+It is possible to limit the amount of results returned by each aspect by calling `limitAspectResults` prior to performing the search.
 
 ```php
 $searchResults = (new Search())

@@ -2,7 +2,9 @@
 
 namespace Spatie\Searchable\Tests;
 
+use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Grammar;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use ReflectionObject;
@@ -63,15 +65,43 @@ class ModelSearchAspectTest extends TestCase
     /** @test */
     public function it_can_build_an_eloquent_query()
     {
+        $searchableAttribute = 'name';
         $searchAspect = ModelSearchAspect::forModel(TestModel::class)
-            ->addSearchableAttribute('name', true)
+            ->addSearchableAttribute($searchableAttribute, true)
             ->addExactSearchableAttribute('email');
+        /** @var Connection $connection */
+        $connection = \DB::connection();
+        /** @var Grammar $grammar */
+        $grammar = $connection->getQueryGrammar();
 
         DB::enableQueryLog();
 
         $searchAspect->getResults('john');
 
-        $expectedQuery = 'select * from "test_models" where (LOWER(name) LIKE ? or "email" = ?)';
+        $expectedQuery = 'select * from "test_models" where (LOWER(' . $grammar->wrap($searchableAttribute) . ') LIKE ? or "email" = ?)';
+
+        $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
+
+        $this->assertEquals($expectedQuery, $executedQuery);
+    }
+
+    /** @test */
+    public function it_can_build_an_eloquent_query_with_segmented_values()
+    {
+        $searchableAttribute = 'test_models.name';
+        $searchAspect = ModelSearchAspect::forModel(TestModel::class)
+            ->addSearchableAttribute($searchableAttribute, true)
+            ->addExactSearchableAttribute('email');
+        /** @var Connection $connection */
+        $connection = \DB::connection();
+        /** @var Grammar $grammar */
+        $grammar = $connection->getQueryGrammar();
+
+        DB::enableQueryLog();
+
+        $searchAspect->getResults('john');
+
+        $expectedQuery = 'select * from "test_models" where (LOWER(' . $grammar->wrap($searchableAttribute) . ') LIKE ? or "email" = ?)';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
 
@@ -92,7 +122,7 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('john');
 
-        $expectedQuery = 'select * from "test_comments" where "test_comments"."test_model_id" in ('.$model->id.')';
+        $expectedQuery = 'select * from "test_comments" where "test_comments"."test_model_id" in (' . $model->id . ')';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '1.query');
 
@@ -102,15 +132,20 @@ class ModelSearchAspectTest extends TestCase
     /** @test */
     public function it_can_build_an_eloquent_query_applying_scopes()
     {
+        $searchableAttribute = 'name';
         $searchAspect = ModelSearchAspect::forModel(TestModel::class)
-            ->addSearchableAttribute('name', true)
+            ->addSearchableAttribute($searchableAttribute, true)
             ->active();
+        /** @var Connection $connection */
+        $connection = \DB::connection();
+        /** @var Grammar $grammar */
+        $grammar = $connection->getQueryGrammar();
 
         DB::enableQueryLog();
 
         $searchAspect->getResults('john');
 
-        $expectedQuery = 'select * from "test_models" where "active" = ? and (LOWER(name) LIKE ?)';
+        $expectedQuery = 'select * from "test_models" where "active" = ? and (LOWER(' . $grammar->wrap($searchableAttribute) . ') LIKE ?)';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
         $firstBinding = Arr::get(DB::getQueryLog(), '0.bindings.0');
@@ -157,26 +192,5 @@ class ModelSearchAspectTest extends TestCase
         $this->expectException(InvalidModelSearchAspect::class);
 
         $searchAspect->getResults('john');
-    }
-
-    /** @test */
-    public function it_can_build_an_eloquent_query_by_many_same_methods()
-    {
-        TestModel::createWithNameAndLastNameAndGenderAndStatus('Taylor', 'Otwell', 'woman', true);
-
-        $searchAspect = ModelSearchAspect::forModel(TestModel::class)
-            ->addSearchableAttribute('name', true)
-            ->where('gender', 'woman')
-            ->where('status', 'activated');
-
-        DB::enableQueryLog();
-
-        $searchAspect->getResults('taylor');
-
-        $expectedQuery = 'select * from "test_models" where "gender" = ? and "status" = ? and (LOWER(name) LIKE ?)';
-
-        $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
-
-        $this->assertEquals($expectedQuery, $executedQuery);
     }
 }

@@ -38,7 +38,7 @@ In this example we used models, but you can easily add a search aspect for an ex
 
 ## Support us
 
-[![Image](https://github-ads.s3.eu-central-1.amazonaws.com/laravel-searchable.jpg)](https://spatie.be/github-ad-click/laravel-searchable)
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-searchable.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-searchable)
 
 We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 

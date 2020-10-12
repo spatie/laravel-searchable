@@ -100,8 +100,8 @@ class ModelSearchAspect extends SearchAspect
 
         $query = ($this->model)::query();
 
-        foreach ($this->callsToForward as $method => $parameters) {
-            $this->forwardCallTo($query, $method, $parameters);
+        foreach ($this->callsToForward as $call) {
+            $this->forwardCallTo($query, $call['method'], $call['parameters']);
         }
 
         $this->addSearchConditions($query, $term);
@@ -130,7 +130,10 @@ class ModelSearchAspect extends SearchAspect
 
     public function __call($method, $parameters)
     {
-        $this->callsToForward[$method] = $parameters;
+        $this->callsToForward[] = [
+            'method' => $method,
+            'parameters' => $parameters,
+        ];
 
         return $this;
     }

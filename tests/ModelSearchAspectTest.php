@@ -155,6 +155,34 @@ class ModelSearchAspectTest extends TestCase
     }
 
     /** @test */
+    public function it_can_build_an_eloquent_query_applying_scopes_with_same_keys()
+    {
+        $searchableAttribute = 'name';
+        $firstBinding = 'blacklisted name';
+        $secondBinding = 'blacklisted last name';
+        $searchAspect = ModelSearchAspect::forModel(TestModel::class)
+            ->addSearchableAttribute($searchableAttribute, true)
+            ->whereNotIn('name', [$firstBinding])
+            ->whereNotIn('last_name', [$secondBinding]);
+        /** @var Connection $connection */
+        $connection = \DB::connection();
+        /** @var Grammar $grammar */
+        $grammar = $connection->getQueryGrammar();
+
+        DB::enableQueryLog();
+
+        $searchAspect->getResults('john');
+
+        $expectedQuery = 'select * from "test_models" where "name" not in (?) and "last_name" not in (?) and (LOWER(' . $grammar->wrap($searchableAttribute) . ') LIKE ?)';
+
+        $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
+
+        $this->assertEquals($expectedQuery, $executedQuery);
+        $this->assertEquals($firstBinding, Arr::get(DB::getQueryLog(), '0.bindings.0'));
+        $this->assertEquals($secondBinding, Arr::get(DB::getQueryLog(), '0.bindings.1'));
+    }
+
+    /** @test */
     public function it_has_a_type()
     {
         $searchAspect = ModelSearchAspect::forModel(TestModel::class);

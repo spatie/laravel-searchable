@@ -36,11 +36,11 @@ class ModelSearchAspect extends SearchAspect
      */
     public function __construct(string $model, $attributes = [])
     {
-        if (!is_subclass_of($model, Model::class)) {
+        if (! is_subclass_of($model, Model::class)) {
             throw InvalidSearchableModel::notAModel($model);
         }
 
-        if (!is_subclass_of($model, Searchable::class)) {
+        if (! is_subclass_of($model, Searchable::class)) {
             throw InvalidSearchableModel::modelDoesNotImplementSearchable($model);
         }
 

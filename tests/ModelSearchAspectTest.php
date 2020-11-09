@@ -92,7 +92,7 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('john');
 
-        $expectedQuery = 'select * from "test_comments" where "test_comments"."test_model_id" in (' . $model->id . ')';
+        $expectedQuery = 'select * from "test_comments" where "test_comments"."test_model_id" in ('.$model->id.')';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '1.query');
 
@@ -130,8 +130,7 @@ class ModelSearchAspectTest extends TestCase
     /** @test */
     public function it_throws_an_exception_when_given_a_class_that_is_not_a_model()
     {
-        $notEvenAModel = new class
-        {
+        $notEvenAModel = new class {
         };
 
         $this->expectException(InvalidSearchableModel::class);
@@ -142,8 +141,7 @@ class ModelSearchAspectTest extends TestCase
     /** @test */
     public function it_throws_an_exception_when_given_an_unsearchable_model()
     {
-        $modelWithoutSearchable = new class extends Model
-        {
+        $modelWithoutSearchable = new class extends Model {
         };
 
         $this->expectException(InvalidSearchableModel::class);

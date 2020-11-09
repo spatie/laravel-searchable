@@ -2,9 +2,9 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
-## 1.7.1 - 2020-09-08
+## 1.7.1 - 2020-11-10
 
-- add support for PostgreSQL
+- remove backticks in SearchAspect to support PostgreSQL (#85)
 
 ## 1.7.0 - 2020-09-08
 

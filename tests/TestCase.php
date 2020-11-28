@@ -24,6 +24,7 @@ class TestCase extends Orchestra
             $table->string('name');
             $table->string('last_name')->nullable();
             $table->boolean('active')->default(false);
+            $table->string('gender')->nullable();
         });
 
         Schema::create('test_comments', function (Blueprint $table) {

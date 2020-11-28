@@ -158,4 +158,25 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('john');
     }
+
+    /** @test */
+    public function it_can_build_an_eloquent_query_by_many_same_methods()
+    {
+        TestModel::createWithNameAndLastNameAndGenderAndStatus('Taylor', 'Otwell', 'woman', true);
+
+        $searchAspect = ModelSearchAspect::forModel(TestModel::class)
+            ->addSearchableAttribute('name', true)
+            ->where('gender', 'woman')
+            ->where('status', 'activated');
+
+        DB::enableQueryLog();
+
+        $searchAspect->getResults('taylor');
+
+        $expectedQuery = 'select * from "test_models" where "gender" = ? and "status" = ? and (LOWER(`name`) LIKE ?)';
+
+        $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
+
+        $this->assertEquals($expectedQuery, $executedQuery);
+    }
 }

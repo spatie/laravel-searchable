@@ -29,10 +29,10 @@ class TestModel extends Model implements Searchable
     public static function createWithNameAndLastNameAndGenderAndStatus(string $name, string $lastName, string $gender, bool $active): self
     {
         return static::create([
-            'name'      => $name,
+            'name' => $name,
             'last_name' => $lastName,
-            'gender'    => $gender,
-            'active'    => $active,
+            'gender' => $gender,
+            'active' => $active,
         ]);
     }
 

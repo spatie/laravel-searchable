@@ -131,8 +131,8 @@ class ModelSearchAspect extends SearchAspect
     public function __call($method, $parameters)
     {
         $this->callsToForward[] = [
-            'method'    => $method,
-            'parameters'=> $parameters,
+            'method' => $method,
+            'parameters' => $parameters,
         ];
 
         return $this;

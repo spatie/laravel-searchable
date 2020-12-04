@@ -173,7 +173,7 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('taylor');
 
-        $expectedQuery = 'select * from "test_models" where "gender" = ? and "status" = ? and (LOWER(`name`) LIKE ?)';
+        $expectedQuery = 'select * from "test_models" where "gender" = ? and "status" = ? and (LOWER(name) LIKE ?)';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
 

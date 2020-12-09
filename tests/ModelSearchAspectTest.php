@@ -227,16 +227,21 @@ class ModelSearchAspectTest extends TestCase
     {
         TestModel::createWithNameAndLastNameAndGenderAndStatus('Taylor', 'Otwell', 'woman', true);
 
+        $searchableAttribute = 'name';
         $searchAspect = ModelSearchAspect::forModel(TestModel::class)
-            ->addSearchableAttribute('name', true)
+            ->addSearchableAttribute($searchableAttribute, true)
             ->where('gender', 'woman')
             ->where('status', 'activated');
+        /** @var Connection $connection */
+        $connection = \DB::connection();
+        /** @var Grammar $grammar */
+        $grammar = $connection->getQueryGrammar();
 
         DB::enableQueryLog();
 
         $searchAspect->getResults('taylor');
 
-        $expectedQuery = 'select * from "test_models" where "gender" = ? and "status" = ? and (LOWER(name) LIKE ?)';
+        $expectedQuery = 'select * from "test_models" where "gender" = ? and "status" = ? and (LOWER(' . $grammar->wrap($searchableAttribute) . ') LIKE ?)';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
 

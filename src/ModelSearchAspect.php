@@ -106,7 +106,7 @@ class ModelSearchAspect extends SearchAspect
 
         $this->addSearchConditions($query, $term);
 
-        if($this->limit) {
+        if ($this->limit) {
             $query->limit($this->limit);
         }
 

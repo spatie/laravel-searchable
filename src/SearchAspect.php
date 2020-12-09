@@ -7,6 +7,9 @@ use Illuminate\Support\Str;
 
 abstract class SearchAspect
 {
+    /** @var int */
+    protected $limit;
+
     abstract public function getResults(string $term): Collection;
 
     public function getType(): string
@@ -22,5 +25,10 @@ abstract class SearchAspect
         $type = Str::snake(Str::plural($type));
 
         return Str::plural($type);
+    }
+
+    public function limit($limit) : void
+    {
+        $this->limit = $limit;
     }
 }

@@ -23,7 +23,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "laravel/framework": "~5.8.0|^6.0|^7.0|^8.0"
+        "laravel/framework": "^6.0|^7.0|^8.0"
     },
     "require-dev": {
         "orchestra/testbench": "~3.8.0|^4.0|^5.0|^6.0",

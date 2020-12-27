@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.9.1 - 2020-12-27
+
+- add support for PHP 8.0
+
 ## 1.9.0 - 2020-12-09
 
 - add aspect search result limit (#82)

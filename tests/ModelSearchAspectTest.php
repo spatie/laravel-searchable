@@ -42,6 +42,20 @@ class ModelSearchAspectTest extends TestCase
     }
 
     /** @test */
+    public function it_can_perform_a_search_on_columns_with_reserved_name()
+    {
+        TestModel::createWithNameAndLastName('jane', 'doe');
+        TestModel::createWithNameAndLastName('Taylor', 'Otwell');
+
+        $searchAspect = ModelSearchAspect::forModel(TestModel::class, 'name', 'where');
+
+        $results = $searchAspect->getResults('Taylor Otwell');
+
+        $this->assertCount(1, $results);
+        $this->assertInstanceOf(TestModel::class, $results[0]);
+    }
+
+    /** @test */
     public function it_can_add_searchable_attributes()
     {
         $searchAspect = ModelSearchAspect::forModel(TestModel::class)

@@ -23,6 +23,7 @@ class TestCase extends Orchestra
             $table->timestamps();
             $table->string('name');
             $table->string('last_name')->nullable();
+            $table->string('where')->nullable();
             $table->boolean('active')->default(false);
             $table->string('gender')->nullable();
         });

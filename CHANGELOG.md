@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.9.2 - 2021-05-03
+
+- handle columns with reserved names (#110)
+
 ## 1.9.1 - 2020-12-27
 
 - add support for PHP 8.0

@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.9.3 - 2021-may-the-forth
+
+- changed query building order to play nice with forwarded calls (#101)
+
 ## 1.9.2 - 2021-05-03
 
 - handle columns with reserved names (#110)

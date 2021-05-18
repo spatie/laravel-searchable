@@ -263,17 +263,24 @@ class SearchTest extends TestCase
         TestModel::createWithName('%');
         TestModel::createWithName('jenna');
 
-        $search = new Search();
+//        $search = new Search();
 
-        $search->registerModel(TestModel::class, 'name');
-        print_r(TestModel::query()->get()->toArray());
-        $results = $search->perform('%');
-        print_r($search->perform('%')->toArray());
-        print_r($results->count());
-        print_r(count($results));
-        $this->assertCount(2, $results);
-
-        $results = $search->perform('doe');
-        $this->assertCount(2, $results->count());
+        $searchResults = (new \Spatie\Searchable\Search())
+            ->registerModel(TestModel::class, 'name')
+            ->search('%');
+        print_r($searchResults);
+        print_r($searchResults->count());
+        print_r($this->count($searchResults));
+        print_r(count($searchResults));
+//        $search->registerModel(TestModel::class, 'name');
+//        print_r(TestModel::query()->get()->toArray());
+//        $results = $search->perform('%');
+//        print_r($search->perform('%')->toArray());
+//        print_r($results->count());
+//        print_r(count($results));
+//        $this->assertCount(2, $results);
+//
+//        $results = $search->perform('doe');
+//        $this->assertCount(2, $results->count());
     }
 }

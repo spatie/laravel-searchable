@@ -267,10 +267,10 @@ class SearchTest extends TestCase
 
         $search->registerModel(TestModel::class, 'name');
 
-        $results = $search->search('%');
+        $results = $search->perform('%');
         $this->assertCount(2, $results);
 
-        $results = $search->search('_');
+        $results = $search->perform('_');
         $this->assertCount(2, $results);
     }
 }

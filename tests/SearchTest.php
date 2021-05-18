@@ -253,4 +253,27 @@ class SearchTest extends TestCase
         $results = $search->limitAspectResults(2)->perform('doe');
         $this->assertCount(4, $results);
     }
+
+    /** @test */
+    public function it_can_search_special_character()
+    {
+        $search = new Search();
+
+        TestModel::createWithName('alex%doe');
+        TestModel::createWithName('alex_doe the second');
+        TestModel::createWithName('_');
+        TestModel::createWithName('%');
+        TestModel::createWithName('jenna');
+
+        // This will return 2 as it's results are hard coded
+        $search->registerAspect(CustomNameSearchAspect::class);
+        // Our limiter should apply to the second aspect registered here and will make it return only 2
+        $search->registerModel(TestModel::class, 'name');
+
+        $results = $search->search('%');
+        $this->assertCount(2, $results);
+
+        $results = $search->search('_');
+        $this->assertCount(2, $results);
+    }
 }

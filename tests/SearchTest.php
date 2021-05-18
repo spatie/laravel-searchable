@@ -265,9 +265,6 @@ class SearchTest extends TestCase
         TestModel::createWithName('%');
         TestModel::createWithName('jenna');
 
-        // This will return 2 as it's results are hard coded
-        $search->registerAspect(CustomNameSearchAspect::class);
-        // Our limiter should apply to the second aspect registered here and will make it return only 2
         $search->registerModel(TestModel::class, 'name');
 
         $results = $search->search('%');

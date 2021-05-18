@@ -257,13 +257,13 @@ class SearchTest extends TestCase
     /** @test */
     public function it_can_search_special_character()
     {
-        $search = new Search();
-
         TestModel::createWithName('alex%doe');
         TestModel::createWithName('alex_doe the second');
         TestModel::createWithName('_');
         TestModel::createWithName('%');
         TestModel::createWithName('jenna');
+
+        $search = new Search();
 
         $search->registerModel(TestModel::class, 'name');
 

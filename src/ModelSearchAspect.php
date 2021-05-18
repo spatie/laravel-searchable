@@ -124,7 +124,7 @@ class ModelSearchAspect extends SearchAspect
 
                 foreach ($searchTerms as $searchTerm) {
                     $searchTerm = mb_strtolower($searchTerm, 'UTF8');
-                    $searchTerm = addcslashes($searchTerm, '%_');
+//                    $searchTerm = addcslashes($searchTerm, '%_');
 
                     $attribute->isPartial()
                         ? $query->orWhereRaw($sql, ["%{$searchTerm}%"])

@@ -123,9 +123,9 @@ class ModelSearchAspect extends SearchAspect
                 $sql = "LOWER({$query->getGrammar()->wrap($attribute->getAttribute())}) LIKE ?";
 
                 foreach ($searchTerms as $searchTerm) {
-//                    $searchTerm = addcslashes($searchTerm, '%_');
-//                    $searchTerm = mb_strtolower($searchTerm, 'UTF8');
-
+                    $searchTerm = mb_strtolower($searchTerm, 'UTF8');
+                    $searchTerm = addcslashes($searchTerm, "%_");
+                    print_r($searchTerm);
                     $attribute->isPartial()
                         ? $query->orWhereRaw($sql, ["%{$searchTerm}%"])
                         : $query->orWhere($attribute->getAttribute(), $searchTerm);

@@ -14,17 +14,17 @@ class SearchTest extends TestCase
     /** @test */
     public function it_can_search_special_character()
     {
-        TestModel::createWithName('alex%doe');
-        TestModel::createWithName('alex_doe the second');
-        TestModel::createWithName('_');
-        TestModel::createWithName('%');
-        TestModel::createWithName('jenna');
+        TestModel::createWithName("alex%doe");
+        TestModel::createWithName("alex_doe the second");
+        TestModel::createWithName("_");
+        TestModel::createWithName("%");
+        TestModel::createWithName("jenna");
 
 //        $search = new Search();
 
         $searchResults = (new \Spatie\Searchable\Search())
-            ->registerModel(TestModel::class, 'name')
-            ->search('%');
+            ->registerModel(TestModel::class, "name")
+            ->search("%");
         print_r($searchResults);
         print_r($searchResults->count());
         print_r(count($searchResults));

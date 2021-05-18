@@ -65,6 +65,7 @@ class Search
     {
         $searchResults = new SearchResultCollection();
 
+        print_r($this->getSearchAspects());
         collect($this->getSearchAspects())
             ->each(function (SearchAspect $aspect) use ($query, $user, $searchResults) {
                 $searchResults->addResults($aspect->getType(), $aspect->getResults($query, $user));

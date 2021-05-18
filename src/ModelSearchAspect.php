@@ -123,7 +123,7 @@ class ModelSearchAspect extends SearchAspect
                 $sql = "LOWER({$query->getGrammar()->wrap($attribute->getAttribute())}) LIKE ?";
 
                 foreach ($searchTerms as $searchTerm) {
-                    $searchTerm = addcslashes($searchTerm, '%_');
+//                    $searchTerm = addcslashes($searchTerm, '%_');
 //                    $searchTerm = mb_strtolower($searchTerm, 'UTF8');
 
                     $attribute->isPartial()

@@ -16,7 +16,7 @@ class TestCase extends Orchestra
         $this->setUpDatabase($this->app);
     }
 
-    protected function setUpDatabase($app)
+    protected function setUpDatabase(Application $app)
     {
         Schema::dropAllTables();
 

@@ -16,9 +16,9 @@ class TestCase extends Orchestra
         $this->setUpDatabase($this->app);
     }
 
-    protected function setUpDatabase(Application $app)
+    protected function setUpDatabase($app)
     {
-        $this->artisan('db:wipe');
+        Schema::dropAllTables();
 
         Schema::create('test_models', function (Blueprint $table) {
             $table->increments('id');
@@ -37,22 +37,11 @@ class TestCase extends Orchestra
         });
     }
 
-    protected function usesMySqlConnection($app)
+    protected function usesMySqlConnection(Application $app)
     {
         $app->config->set('database.default', 'mysql');
-        $app->config->set('database.connections.mysql', [
-            'driver' => 'mysql',
-            'host' => '127.0.0.1',
-            'port' => '3306',
-            'database' => 'test',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'strict' => true,
-            'engine' => null,
-        ]);
+        $app->config->set('database.connections.mysql.database', 'test');
+        $app->config->set('database.connections.mysql.username', 'root');
+        $app->config->set('database.connections.mysql.password', '');
     }
 }

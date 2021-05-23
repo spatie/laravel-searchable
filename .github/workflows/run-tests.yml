@@ -5,6 +5,7 @@ on: [push, pull_request]
 jobs:
     test:
         runs-on: ${{ matrix.os }}
+
         strategy:
             fail-fast: false
             matrix:
@@ -17,6 +18,16 @@ jobs:
                         testbench: 6.*
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
+
+        services:
+            mysql:
+                image: mysql:5.7
+                env:
+                    MYSQL_ALLOW_EMPTY_PASSWORD: yes
+                    MYSQL_DATABASE: test
+                ports:
+                    - 3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
         steps:
             -   name: Checkout code
@@ -32,12 +43,18 @@ jobs:
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php }}
-                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, mysql, mysqli, pdo_mysql, bcmath, soap, intl, gd, exif, iconv, imagick
                     coverage: none
 
             -   name: Install dependencies
                 run: |
                     composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
                     composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+
+            -   name: Start database server
+                run: sudo /etc/init.d/mysql start
+
             -   name: Execute tests
                 run: vendor/bin/phpunit
+                env:
+                    DB_PORT: ${{ job.services.mysql.ports[3306] }}

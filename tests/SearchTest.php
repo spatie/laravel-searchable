@@ -294,7 +294,7 @@ class SearchTest extends TestCase
      * @test
      * @define-env usesMySqlConnection
      */
-    public function it_can_search_special_character_except_mysql()
+    public function it_can_search_special_character_mysql()
     {
         TestModel::createWithName("%");
         TestModel::createWithName("alex%doe");

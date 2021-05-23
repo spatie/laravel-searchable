@@ -18,6 +18,8 @@ class TestCase extends Orchestra
 
     protected function setUpDatabase(Application $app)
     {
+        $this->artisan('db:wipe');
+
         Schema::create('test_models', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
@@ -33,5 +35,24 @@ class TestCase extends Orchestra
             $table->timestamps();
             $table->unsignedInteger('test_model_id');
         });
+    }
+
+    protected function usesMySqlConnection($app)
+    {
+        $app->config->set('database.default', 'mysql');
+        $app->config->set('database.connections.mysql', [
+            'driver' => 'mysql',
+            'host' => '127.0.0.1',
+            'port' => '3306',
+            'database' => 'test',
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+        ]);
     }
 }

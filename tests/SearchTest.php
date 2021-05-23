@@ -253,4 +253,77 @@ class SearchTest extends TestCase
         $results = $search->limitAspectResults(2)->perform('doe');
         $this->assertCount(4, $results);
     }
+
+    /**
+     * @test
+     */
+    public function it_can_search_special_character_sqlite()
+    {
+        TestModel::createWithName("%");
+        TestModel::createWithName("alex%doe");
+
+        TestModel::createWithName("_");
+        TestModel::createWithName("alex_doe the second");
+
+        TestModel::createWithName("\\");
+        TestModel::createWithName("jen\\na");
+
+        TestModel::createWithName("jen\\%na");
+        TestModel::createWithName("jen\\_na");
+
+        $search = new Search();
+        $search->registerModel(TestModel::class, 'name');
+
+        $searchResults = $search->perform('%');
+        $this->assertCount(3, $searchResults);
+
+        $searchResults = $search->perform('_');
+        $this->assertCount(3, $searchResults);
+
+        $searchResults = $search->perform('\\');
+        $this->assertCount(4, $searchResults);
+
+        $searchResults = $search->perform('\\%');
+        $this->assertCount(1, $searchResults);
+
+        $searchResults = $search->perform('\\_');
+        $this->assertCount(1, $searchResults);
+    }
+
+    /**
+     * @test
+     * @define-env usesMySqlConnection
+     */
+    public function it_can_search_special_character_except_mysql()
+    {
+        TestModel::createWithName("%");
+        TestModel::createWithName("alex%doe");
+
+        TestModel::createWithName("_");
+        TestModel::createWithName("alex_doe the second");
+
+        TestModel::createWithName("\\");
+        TestModel::createWithName("jen\\na");
+
+        TestModel::createWithName("jen\\%na");
+        TestModel::createWithName("jen\\_na");
+
+        $search = new Search();
+        $search->registerModel(TestModel::class, 'name');
+
+        $searchResults = $search->perform('%');
+        $this->assertCount(3, $searchResults);
+
+        $searchResults = $search->perform('_');
+        $this->assertCount(3, $searchResults);
+
+        $searchResults = $search->perform('\\');
+        $this->assertCount(4, $searchResults);
+
+        $searchResults = $search->perform('\\%');
+        $this->assertCount(1, $searchResults);
+
+        $searchResults = $search->perform('\\_');
+        $this->assertCount(1, $searchResults);
+    }
 }

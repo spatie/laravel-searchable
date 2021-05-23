@@ -85,7 +85,7 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('john');
 
-        $expectedQuery = 'select * from "test_models" where (LOWER("name") LIKE ? or "email" = ?)';
+        $expectedQuery = 'select * from "test_models" where (LOWER("name") LIKE ? ESCAPE ? or "email" = ?)';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
 
@@ -124,10 +124,10 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('john');
 
-        $expectedQuery = 'select * from "test_models" where (LOWER("name") LIKE ?) and "active" = ?';
+        $expectedQuery = 'select * from "test_models" where (LOWER("name") LIKE ? ESCAPE ?) and "active" = ?';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
-        $secondBinding = Arr::get(DB::getQueryLog(), '0.bindings.1');
+        $secondBinding = Arr::get(DB::getQueryLog(), '0.bindings.2');
 
         $this->assertEquals($expectedQuery, $executedQuery);
         $this->assertEquals(1, $secondBinding);
@@ -187,7 +187,7 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('taylor');
 
-        $expectedQuery = 'select * from "test_models" where (LOWER("name") LIKE ?) and "gender" = ? and "status" = ?';
+        $expectedQuery = 'select * from "test_models" where (LOWER("name") LIKE ? ESCAPE ?) and "gender" = ? and "status" = ?';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
 
@@ -208,7 +208,7 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('woman');
 
-        $expectedQuery = 'select * from "test_models" where (LOWER("name") LIKE ?) or "gender" = ? or "status" = ?';
+        $expectedQuery = 'select * from "test_models" where (LOWER("name") LIKE ? ESCAPE ?) or "gender" = ? or "status" = ?';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
 
@@ -231,7 +231,7 @@ class ModelSearchAspectTest extends TestCase
 
         $searchAspect->getResults('woman');
 
-        $expectedQuery = 'select * from "test_models" where (LOWER("name") LIKE ?) or ("gender" = ? and "status" = ?)';
+        $expectedQuery = 'select * from "test_models" where (LOWER("name") LIKE ? ESCAPE ?) or ("gender" = ? and "status" = ?)';
 
         $executedQuery = Arr::get(DB::getQueryLog(), '0.query');
 

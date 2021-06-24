@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Spatie\Searchable\Exceptions\InvalidModelSearchAspect;
 use Spatie\Searchable\Exceptions\InvalidSearchableModel;
@@ -120,17 +121,30 @@ class ModelSearchAspect extends SearchAspect
 
         $query->where(function (Builder $query) use ($attributes, $term, $searchTerms) {
             foreach (Arr::wrap($attributes) as $attribute) {
-                $sql = "LOWER({$query->getGrammar()->wrap($attribute->getAttribute())}) LIKE ?";
+                $sql = "LOWER({$query->getGrammar()->wrap($attribute->getAttribute())}) LIKE ? ESCAPE ?";
 
                 foreach ($searchTerms as $searchTerm) {
                     $searchTerm = mb_strtolower($searchTerm, 'UTF8');
+                    $searchTerm = str_replace("\\", $this->getBackslashByPdo(), $searchTerm);
+                    $searchTerm = addcslashes($searchTerm, "%_");
 
                     $attribute->isPartial()
-                        ? $query->orWhereRaw($sql, ["%{$searchTerm}%"])
+                        ? $query->orWhereRaw($sql, ["%{$searchTerm}%", '\\'])
                         : $query->orWhere($attribute->getAttribute(), $searchTerm);
                 }
             }
         });
+    }
+
+    protected function getBackslashByPdo()
+    {
+        $pdoDriver = DB::connection()->getPdo()->getAttribute(\PDO::ATTR_DRIVER_NAME);
+
+        if ($pdoDriver === 'sqlite') {
+            return '\\\\';
+        }
+
+        return '\\\\\\';
     }
 
     public function __call($method, $parameters)

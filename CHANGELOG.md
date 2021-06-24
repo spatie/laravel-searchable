@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.10.0 - 2021-06-24
+
+- Allow searching with special characters (#117)
+
 ## 1.9.3 - 2021-may-the-forth
 
 - changed query building order to play nice with forwarded calls (#101)

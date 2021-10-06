@@ -117,21 +117,18 @@ class ModelSearchAspect extends SearchAspect
     protected function addSearchConditions(Builder $query, string $term)
     {
         $attributes = $this->attributes;
-        $searchTerms = explode(' ', $term);
 
-        $query->where(function (Builder $query) use ($attributes, $term, $searchTerms) {
+        $query->where(function (Builder $query) use ($attributes, $term) {
             foreach (Arr::wrap($attributes) as $attribute) {
                 $sql = "LOWER({$query->getGrammar()->wrap($attribute->getAttribute())}) LIKE ? ESCAPE ?";
 
-                foreach ($searchTerms as $searchTerm) {
-                    $searchTerm = mb_strtolower($searchTerm, 'UTF8');
-                    $searchTerm = str_replace("\\", $this->getBackslashByPdo(), $searchTerm);
-                    $searchTerm = addcslashes($searchTerm, "%_");
+                $term = mb_strtolower($term, 'UTF8');
+                $term = str_replace("\\", $this->getBackslashByPdo(), $term);
+                $term = addcslashes($term, "%_");
 
-                    $attribute->isPartial()
-                        ? $query->orWhereRaw($sql, ["%{$searchTerm}%", '\\'])
-                        : $query->orWhere($attribute->getAttribute(), $searchTerm);
-                }
+                $attribute->isPartial()
+                    ? $query->orWhereRaw($sql, ["%{$term}%", '\\'])
+                    : $query->orWhere($attribute->getAttribute(), $term);
             }
         });
     }

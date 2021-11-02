@@ -169,7 +169,7 @@ $searchResults = (new Search())
 
 Here's an example on rendering search results:
 
-```html
+```blade
 <h1>Search</h1>
 
 There are {{ $searchResults->count() }} results.

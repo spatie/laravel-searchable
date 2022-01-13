@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.11.0 - 2022-01-13
+
+## What's Changed
+
+- Update code block syntax by @grantholle in https://github.com/spatie/laravel-searchable/pull/126
+- Add support for Laravel 9
+
+## New Contributors
+
+- @grantholle made their first contribution in https://github.com/spatie/laravel-searchable/pull/126
+
+**Full Changelog**: https://github.com/spatie/laravel-searchable/compare/1.10.0...1.11.0
+
 ## 1.10.0 - 2021-06-24
 
 - Allow searching with special characters (#117)

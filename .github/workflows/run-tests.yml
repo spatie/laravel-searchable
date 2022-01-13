@@ -12,7 +12,7 @@ jobs:
                 os: [ubuntu-latest]
                 php: [7.3, 7.4, 8.0, 8.1]
                 laravel: [9.*, 8.*]
-                dependency-version: [prefer-lowest, prefer-stable]
+                dependency-version: [prefer-stable]
                 include:
                     -   laravel: 9.*
                         testbench: 7.*

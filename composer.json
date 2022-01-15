@@ -21,12 +21,11 @@
             "role": "Developer"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "php": "^7.3|^8.0",
-        "laravel/framework": "^8.78|^9.0",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "spatie/laravel-package-tools": "^1.9.2",
+        "illuminate/contracts": "^8.73"
     },
     "require-dev": {
         "orchestra/testbench": "^6.27|^7.0",
@@ -48,6 +47,19 @@
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
     },
     "config": {
-        "sort-packages": true
-    }
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spatie\\Searchable\\LaravelSearchableServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

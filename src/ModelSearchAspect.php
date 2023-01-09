@@ -11,6 +11,9 @@ use Illuminate\Support\Traits\ForwardsCalls;
 use Spatie\Searchable\Exceptions\InvalidModelSearchAspect;
 use Spatie\Searchable\Exceptions\InvalidSearchableModel;
 
+/**
+ * @mixin Builder
+ */
 class ModelSearchAspect extends SearchAspect
 {
     use ForwardsCalls;

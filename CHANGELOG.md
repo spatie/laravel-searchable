@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.11.2 - 2023-01-24
+
+### What's Changed
+
+- Laravel 10.x Compatibility by @laravel-shift in https://github.com/spatie/laravel-searchable/pull/140
+
+**Full Changelog**: https://github.com/spatie/laravel-searchable/compare/1.11.1...1.11.2
+
 ## 1.11.1 - 2023-01-24
 
 ### What's Changed

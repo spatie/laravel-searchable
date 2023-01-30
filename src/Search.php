@@ -10,6 +10,17 @@ class Search
     protected $aspects = [];
 
     /**
+     * Create a new instance.
+     *
+     * @param  mixed  ...$arguments
+     * @return static
+     */
+    public static function make(...$arguments)
+    {
+        return new static(...$arguments);
+    }
+
+    /**
      * @param string|\Spatie\Searchable\SearchAspect $searchAspect
      *
      * @return \Spatie\Searchable\Search

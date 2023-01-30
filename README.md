@@ -11,7 +11,7 @@
 This package makes it easy to get structured search from a variety of sources. Here's an example where we search through some models. We already did some small preparation on the models themselves.
 
 ```php
-$searchResults = (new Search())
+$searchResults = Search::make()
    ->registerModel(User::class, 'name')
    ->registerModel(BlogPost::class, 'title')
    ->search('john');
@@ -28,7 +28,7 @@ There are {{ $searchResults->count() }} results.
 
 @foreach($searchResults->groupByType() as $type => $modelSearchResults)
    <h2>{{ $type }}</h2>
-   
+
    @foreach($modelSearchResults as $searchResult)
        <ul>
             <li><a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a></li>
@@ -81,7 +81,7 @@ class BlogPost extends Model implements Searchable
      public function getSearchResult(): SearchResult
      {
         $url = route('blogPost.show', $this->slug);
-     
+
          return new \Spatie\Searchable\SearchResult(
             $this,
             $this->title,
@@ -96,7 +96,7 @@ class BlogPost extends Model implements Searchable
 With the models prepared you can search them like this:
 
 ```php
-$searchResults = (new Search())
+$searchResults = Search::make()
    ->registerModel(User::class, 'name')
    ->search('john');
 ```
@@ -108,13 +108,13 @@ You can also pass multiple attributes to search through:
 ```php
 // use multiple model attributes
 
-$searchResults = (new Search())
+$searchResults = Search::make()
    ->registerModel(User::class, 'first_name', 'last_name')
    ->search('john');
-   
+
 // or use an array of model attributes
 
-$searchResults = (new Search())
+$searchResults = Search::make()
    ->registerModel(User::class, ['first_name', 'last_name'])
    ->search('john');
 ```
@@ -122,7 +122,7 @@ $searchResults = (new Search())
 To get fine grained control you can also use a callable. This way you can also search for exact matches, apply scopes, eager load relationships, or even filter your query like you would using the query builder.
 
 ```php
-$search = (new Search())
+$search = Search::make()
    ->registerModel(User::class, function(ModelSearchAspect $modelSearchAspect) {
        $modelSearchAspect
           ->addSearchableAttribute('name') // return results for partial matches on usernames
@@ -152,7 +152,7 @@ class OrderSearchAspect extends SearchAspect
 This is how you can use it:
 
 ```php
-$searchResults = (new Search())
+$searchResults = Search::make()
    ->registerAspect(OrderSearchAspect::class)
    ->search('john');
 ```
@@ -162,7 +162,7 @@ $searchResults = (new Search())
 It is possible to limit the amount of results returned by each aspect by calling `limitAspectResults` prior to performing the search.
 
 ```php
-$searchResults = (new Search())
+$searchResults = Search::make()
     ->registerAspect(BlogPostAspect::class)
     ->limitAspectResults(50)
     ->search('How To');
@@ -179,7 +179,7 @@ There are {{ $searchResults->count() }} results.
 
 @foreach($searchResults->groupByType() as $type => $modelSearchResults)
    <h2>{{ $type }}</h2>
-   
+
    @foreach($modelSearchResults as $searchResult)
        <ul>
             <a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a>

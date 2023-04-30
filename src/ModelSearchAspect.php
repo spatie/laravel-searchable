@@ -4,6 +4,7 @@ namespace Spatie\Searchable;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -96,7 +97,7 @@ class ModelSearchAspect extends SearchAspect
         return $model->getTable();
     }
 
-    public function getResults(string $term): Collection
+    public function getResults(string $term, ?User $user = null): Collection
     {
         if (empty($this->attributes)) {
             throw InvalidModelSearchAspect::noSearchableAttributes($this->model);
@@ -112,6 +113,14 @@ class ModelSearchAspect extends SearchAspect
 
         if ($this->limit) {
             $query->limit($this->limit);
+        }
+
+        if ($user) {
+            $model = new $this->model();
+
+            $userColumn = property_exists($model, 'userColumn') ? $model->userColumn : 'user_id';
+
+            $query->where($userColumn, $user->id);
         }
 
         return $query->get();

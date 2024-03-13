@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.12.0 - 2024-03-13
+
+### What's Changed
+
+* Update composer.json by @officialkidmax in https://github.com/spatie/laravel-searchable/pull/145
+
+### New Contributors
+
+* @officialkidmax made their first contribution in https://github.com/spatie/laravel-searchable/pull/145
+
+**Full Changelog**: https://github.com/spatie/laravel-searchable/compare/1.11.2...1.12.0
+
 ## 1.11.2 - 2023-01-24
 
 ### What's Changed

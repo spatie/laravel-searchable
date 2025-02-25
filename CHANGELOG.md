@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.13.0 - 2025-02-25
+
+### What's Changed
+
+* L12 compatibility by @nessimabadi in https://github.com/spatie/laravel-searchable/pull/149
+
+### New Contributors
+
+* @nessimabadi made their first contribution in https://github.com/spatie/laravel-searchable/pull/149
+
+**Full Changelog**: https://github.com/spatie/laravel-searchable/compare/1.12.0...1.13.0
+
 ## 1.12.0 - 2024-03-13
 
 ### What's Changed

@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.13.1 - 2026-02-09
+
+### What's Changed
+
+* Fix exact searchable attributes not matching column values with spaces (#151) in https://github.com/spatie/laravel-searchable/pull/152
+
+**Full Changelog**: https://github.com/spatie/laravel-searchable/compare/1.13.0...1.13.1
+
 ## 1.13.0 - 2025-02-25
 
 ### What's Changed

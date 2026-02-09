@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.13.2 - 2026-02-09
+
+### What's Changed
+
+* Use early continue instead of else in `addSearchConditions`
+
+**Full Changelog**: https://github.com/spatie/laravel-searchable/compare/1.13.1...1.13.2
+
 ## 1.13.1 - 2026-02-09
 
 ### What's Changed

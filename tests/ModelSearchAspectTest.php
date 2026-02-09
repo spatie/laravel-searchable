@@ -93,6 +93,21 @@ class ModelSearchAspectTest extends TestCase
     }
 
     /** @test */
+    public function it_can_perform_an_exact_search_with_spaces_in_the_term()
+    {
+        TestModel::createWithName('have fun');
+        TestModel::createWithName('other');
+
+        $searchAspect = ModelSearchAspect::forModel(TestModel::class)
+            ->addExactSearchableAttribute('name');
+
+        $results = $searchAspect->getResults('have fun');
+
+        $this->assertCount(1, $results);
+        $this->assertEquals('have fun', $results[0]->name);
+    }
+
+    /** @test */
     public function it_can_build_an_eloquent_query_to_eager_load_relationships()
     {
         $model = TestModel::createWithName('john');

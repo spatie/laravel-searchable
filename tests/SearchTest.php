@@ -8,10 +8,11 @@ use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Search;
 use Spatie\Searchable\Tests\Models\TestModel;
 use Spatie\Searchable\Tests\stubs\CustomNameSearchAspect;
+use PHPUnit\Framework\Attributes\Test;
 
 class SearchTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_can_search_a_model_search_aspect()
     {
         TestModel::createWithName('john doe');
@@ -28,7 +29,7 @@ class SearchTest extends TestCase
         $this->assertCount(1, $results->aspect('test_models'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_apply_scopes_and_eager_load_relationships_to_a_model_search_aspect()
     {
         $john = tap(TestModel::createWithName('john doe'), function ($model) {
@@ -59,7 +60,7 @@ class SearchTest extends TestCase
         $this->assertTrue($searchableFound->relationLoaded('comments'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_register_a_model_search_aspect_attribute_thats_also_a_global_function()
     {
         $search = new Search();
@@ -69,7 +70,7 @@ class SearchTest extends TestCase
         $this->assertCount(1, $search->getSearchAspects());
     }
 
-    /** @test */
+    #[Test]
     public function a_model_search_aspect_can_be_configured_using_a_closure()
     {
         TestModel::createWithName('john doe');
@@ -88,7 +89,7 @@ class SearchTest extends TestCase
         $this->assertCount(1, $results->aspect('test_models'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_search_a_custom_search_aspect()
     {
         $search = new Search();
@@ -102,7 +103,7 @@ class SearchTest extends TestCase
         $this->assertCount(2, $results->aspect('custom_names'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_search_multiple_aspects_together()
     {
         TestModel::createWithName('alex doe');
@@ -122,7 +123,7 @@ class SearchTest extends TestCase
         $this->assertCount(1, $results->aspect('test_models'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_register_a_class_name_as_search_aspect()
     {
         $search = (new Search())->registerAspect(CustomNameSearchAspect::class);
@@ -133,7 +134,7 @@ class SearchTest extends TestCase
         $this->assertInstanceOf(CustomNameSearchAspect::class, Arr::first($aspects));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_register_search_aspect()
     {
         $aspect = new CustomNameSearchAspect();
@@ -146,7 +147,7 @@ class SearchTest extends TestCase
         $this->assertInstanceOf(CustomNameSearchAspect::class, Arr::first($aspects));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_register_a_model_search_aspect()
     {
         $search = new Search();
@@ -160,7 +161,7 @@ class SearchTest extends TestCase
         $this->assertEquals('test_models', Arr::first($aspects)->getType());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_register_a_model_search_aspect_with_attributes()
     {
         $search = new Search();
@@ -177,7 +178,7 @@ class SearchTest extends TestCase
         $this->assertCount(2, $attributes);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_register_a_model_search_aspect_with_an_array_of_attributes()
     {
         $search = new Search();
@@ -194,7 +195,7 @@ class SearchTest extends TestCase
         $this->assertCount(2, $attributes);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_register_a_model_search_aspect_with_a_attributes_from_a_callback()
     {
         $search = new Search();
@@ -215,7 +216,7 @@ class SearchTest extends TestCase
         $this->assertCount(2, $attributes);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_limit_aspect_results()
     {
         $search = new Search();
@@ -235,7 +236,7 @@ class SearchTest extends TestCase
         $this->assertCount(2, $results);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_limit_multiple_aspect_results()
     {
         $search = new Search();
@@ -254,9 +255,7 @@ class SearchTest extends TestCase
         $this->assertCount(4, $results);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_search_special_character_sqlite()
     {
         TestModel::createWithName("%");
@@ -291,7 +290,6 @@ class SearchTest extends TestCase
     }
 
     /**
-     * @test
      * @define-env usesMySqlConnection
      */
     public function it_can_search_special_character_mysql()

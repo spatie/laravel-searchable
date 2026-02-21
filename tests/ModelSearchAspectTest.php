@@ -10,10 +10,11 @@ use Spatie\Searchable\Exceptions\InvalidModelSearchAspect;
 use Spatie\Searchable\Exceptions\InvalidSearchableModel;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Tests\Models\TestModel;
+use PHPUnit\Framework\Attributes\Test;
 
 class ModelSearchAspectTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_can_perform_a_search()
     {
         TestModel::createWithName('john');
@@ -27,7 +28,7 @@ class ModelSearchAspectTest extends TestCase
         $this->assertInstanceOf(TestModel::class, $results[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_perform_a_search_on_multiple_columns()
     {
         TestModel::createWithNameAndLastName('jane', 'doe');
@@ -41,7 +42,7 @@ class ModelSearchAspectTest extends TestCase
         $this->assertInstanceOf(TestModel::class, $results[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_perform_a_search_on_columns_with_reserved_name()
     {
         TestModel::createWithNameAndLastName('jane', 'doe');
@@ -55,7 +56,7 @@ class ModelSearchAspectTest extends TestCase
         $this->assertInstanceOf(TestModel::class, $results[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_add_searchable_attributes()
     {
         $searchAspect = ModelSearchAspect::forModel(TestModel::class)
@@ -74,7 +75,7 @@ class ModelSearchAspectTest extends TestCase
         $this->assertEquals('email', $attributes[1]->getAttribute());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_build_an_eloquent_query()
     {
         $searchAspect = ModelSearchAspect::forModel(TestModel::class)
@@ -92,7 +93,7 @@ class ModelSearchAspectTest extends TestCase
         $this->assertEquals($expectedQuery, $executedQuery);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_perform_an_exact_search_with_spaces_in_the_term()
     {
         TestModel::createWithName('have fun');
@@ -107,7 +108,7 @@ class ModelSearchAspectTest extends TestCase
         $this->assertEquals('have fun', $results[0]->name);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_build_an_eloquent_query_to_eager_load_relationships()
     {
         $model = TestModel::createWithName('john');
@@ -128,7 +129,7 @@ class ModelSearchAspectTest extends TestCase
         $this->assertEquals($expectedQuery, $executedQuery);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_build_an_eloquent_query_applying_scopes()
     {
         $searchAspect = ModelSearchAspect::forModel(TestModel::class)
@@ -148,7 +149,7 @@ class ModelSearchAspectTest extends TestCase
         $this->assertEquals(1, $secondBinding);
     }
 
-    /** @test */
+    #[Test]
     public function it_has_a_type()
     {
         $searchAspect = ModelSearchAspect::forModel(TestModel::class);
@@ -156,7 +157,7 @@ class ModelSearchAspectTest extends TestCase
         $this->assertEquals('test_models', $searchAspect->getType());
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_when_given_a_class_that_is_not_a_model()
     {
         $notEvenAModel = new class {
@@ -167,7 +168,7 @@ class ModelSearchAspectTest extends TestCase
         ModelSearchAspect::forModel(get_class($notEvenAModel));
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_when_given_an_unsearchable_model()
     {
         $modelWithoutSearchable = new class extends Model {
@@ -178,7 +179,7 @@ class ModelSearchAspectTest extends TestCase
         ModelSearchAspect::forModel(get_class($modelWithoutSearchable));
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_if_there_are_no_searchable_attributes()
     {
         $searchAspect = ModelSearchAspect::forModel(TestModel::class);
@@ -188,7 +189,7 @@ class ModelSearchAspectTest extends TestCase
         $searchAspect->getResults('john');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_build_an_eloquent_query_by_many_same_methods()
     {
         TestModel::createWithNameAndLastNameAndGenderAndStatus('Taylor', 'Otwell', 'woman', true);
@@ -209,7 +210,7 @@ class ModelSearchAspectTest extends TestCase
         $this->assertEquals($expectedQuery, $executedQuery);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_build_an_eloquent_query_with_or_clause()
     {
         TestModel::createWithNameAndLastNameAndGenderAndStatus('Taylor', 'Otwell', 'woman', true);
@@ -230,7 +231,7 @@ class ModelSearchAspectTest extends TestCase
         $this->assertEquals($expectedQuery, $executedQuery);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_build_an_eloquent_query_with_mixed_andor_clause()
     {
         TestModel::createWithNameAndLastNameAndGenderAndStatus('Taylor', 'Otwell', 'woman', true);

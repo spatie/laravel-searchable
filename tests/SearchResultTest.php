@@ -4,10 +4,11 @@ namespace Spatie\Searchable\Tests;
 
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use PHPUnit\Framework\Attributes\Test;
 
 class SearchResultTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_can_store_a_search_result()
     {
         $searchable = new class implements Searchable {

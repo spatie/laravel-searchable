@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-searchable` will be documented in this file
 
+## 1.13.3 - 2026-02-21
+
+Support Laravel 13
+
 ## 1.13.2 - 2026-02-09
 
 ### What's Changed

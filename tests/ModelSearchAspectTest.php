@@ -5,12 +5,12 @@ namespace Spatie\Searchable\Tests;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Attributes\Test;
 use ReflectionObject;
 use Spatie\Searchable\Exceptions\InvalidModelSearchAspect;
 use Spatie\Searchable\Exceptions\InvalidSearchableModel;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Tests\Models\TestModel;
-use PHPUnit\Framework\Attributes\Test;
 
 class ModelSearchAspectTest extends TestCase
 {

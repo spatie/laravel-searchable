@@ -2,8 +2,8 @@
 
 namespace Spatie\Searchable\Tests;
 
-use Spatie\Searchable\Tests\stubs\CustomNameSearchAspect;
 use PHPUnit\Framework\Attributes\Test;
+use Spatie\Searchable\Tests\stubs\CustomNameSearchAspect;
 
 class SearchAspectTest extends TestCase
 {

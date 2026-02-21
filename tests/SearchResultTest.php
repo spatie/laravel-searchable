@@ -2,9 +2,9 @@
 
 namespace Spatie\Searchable\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use PHPUnit\Framework\Attributes\Test;
 
 class SearchResultTest extends TestCase
 {

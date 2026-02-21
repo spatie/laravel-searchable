@@ -3,12 +3,12 @@
 namespace Spatie\Searchable\Tests;
 
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 use ReflectionObject;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Search;
 use Spatie\Searchable\Tests\Models\TestModel;
 use Spatie\Searchable\Tests\stubs\CustomNameSearchAspect;
-use PHPUnit\Framework\Attributes\Test;
 
 class SearchTest extends TestCase
 {

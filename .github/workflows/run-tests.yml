@@ -57,9 +57,6 @@ jobs:
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
-      - name: Start database server
-        run: sudo /etc/init.d/mysql start
-
       - name: Execute tests
         run: vendor/bin/phpunit
         env:
